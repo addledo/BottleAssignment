@@ -1,5 +1,6 @@
 import java.io.*;
 import java.util.ArrayList;
+import java.util.Iterator;
 
 public class Main {
 
@@ -31,8 +32,8 @@ public class Main {
                     return;
                 case 5:
                     //Remove bottles
-                    printRemoveMenu();
-                    Utils.scanInt("#: ");
+                    removeItems(bottles);
+
                     break;
                 case 6:
                     //Exit
@@ -63,6 +64,7 @@ public class Main {
     }
 
     public static void printRemoveMenu() {
+        System.out.println();
         System.out.println("0. Return");
         System.out.println("1. Delete a single bottle");
         System.out.println("2. Delete by brand");
@@ -75,16 +77,40 @@ public class Main {
         return menuChoice;
     }
 
-    public static int getRemoveMenuChoice() {
-        int menuChoice;
-        while (true) {
-            menuChoice = Utils.scanInt("#: ");
-            if (1 <= menuChoice && menuChoice <= 5) {
-                return menuChoice;
-            }
-            System.out.printf("%nInvalid entry. Please enter a number corresponding to the following:%n");
-            printMenu();
+    public static void removeItems(ArrayList<Bottle> bottles) {
+        printRemoveMenu();
+        int menuChoice = Utils.scanBoundedInt(0, 3, "#: ");
+        switch (menuChoice) {
+            case 0:
+                return;
+            case 1:
+                removeSingleBottle(bottles);
+                break;
+            case 2:
+                deleteByBrand(bottles);
+                break;
+            case 3:
+                deleteByVolume(bottles);
         }
+        return;
+    }
+
+    public static void deleteByBrand(ArrayList<Bottle> bottles) {
+        //TODO    Delete by brand
+    }
+
+    public static void deleteByVolume(ArrayList<Bottle> bottles) {
+        int lowerBound = Utils.scanInt("Lower bound: ");
+        int upperBound = Utils.scanInt("Upper bound: ");
+        Iterator<Bottle> bottleIterator = bottles.iterator();
+        while (bottleIterator.hasNext()) {
+            Bottle bottle = bottleIterator.next();
+            int volume = bottle.getVolumeML();
+            if (upperBound < volume || volume < lowerBound) {
+                bottleIterator.remove();
+            }
+        }
+        return;
     }
 
     public static Bottle createBottle() {
@@ -174,7 +200,7 @@ public class Main {
         return String.format("[%d] %s, %dml, %s, %s", num, brand, volume, material, contents);
     }
 
-    public static void removeBottle(ArrayList<Bottle> bottles) {
+    public static void removeSingleBottle(ArrayList<Bottle> bottles) {
         if (bottles.isEmpty()) {
             System.out.println("There are no bottles to remove. Press enter to go back");
             Utils.waitForUser();
