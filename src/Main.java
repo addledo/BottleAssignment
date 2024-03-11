@@ -211,18 +211,23 @@ public class Main {
             Utils.waitForUser();
             return;
         }
+        int selection = chooseBottle(bottles);
+        if (selection == -1) {
+            return;
+        }
+        bottles.remove(selection);
+    }
+
+    private static Integer chooseBottle(ArrayList<Bottle> bottles) {
         printBottles(bottles);
-        int selection = Utils.scanInt("Enter the number of the bottle to remove: ");
+        int selection = Utils.scanInt("Enter the number of the bottle: ");
         while (selection <= 0 || selection > bottles.size()) {
             System.out.println("That bottle does not exist.");
             System.out.println("Try again or enter 0 to go back.");
             selection = Utils.scanInt("#: ");
-            if (selection == 0) {
-                return;
-            }
         }
         selection -= 1; //User list counts from 1
-        bottles.remove(selection);
+        return selection;
     }
 
     public static void saveBottles(ArrayList<Bottle> bottles, String location) {
