@@ -28,12 +28,15 @@ public class Main {
                     break;
                 case 4:
                     //Modify bottles
+                    // IDEAS:
+                    // ADD CONTENTS
+                    // sort
+                    // calculations
 
                     return;
                 case 5:
                     //Remove bottles
                     removeItems(bottles);
-
                     break;
                 case 6:
                     //Exit
@@ -60,7 +63,6 @@ public class Main {
         System.out.println("1. Change the contents of a bottle");
         System.out.println("2. Sort bottles by brand");
         System.out.println("3. Sort bottles by volume");
-        System.out.println("4. Delete bottles by brand");
     }
 
     public static void printRemoveMenu() {
@@ -91,6 +93,16 @@ public class Main {
         return;
     }
 
+    public static void modifyItems(ArrayList<Bottle> bottles) {
+        int menuChoice = Utils.scanBoundedInt(0, 3, "#: ");
+        switch (menuChoice) {
+            case 0:
+                return;
+            case 1:
+                //Change contents
+
+        }
+    }
 
     public static void deleteByVolume(ArrayList<Bottle> bottles) {
         int lowerBound = Utils.scanInt("Lower bound: ");
