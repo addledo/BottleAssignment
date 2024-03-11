@@ -120,14 +120,8 @@ public class Main {
     }
 
     private static int getVolumeInML() {
-        int volumeInML = 0;
-        while (true) {
-            volumeInML = Utils.scanInt("Volume(ml): ");
-            if (volumeInML > 0) {
-                break;
-            }
-            System.out.println("Invalid entry");
-        }
+        int volumeInML;
+        volumeInML = Utils.scanBoundedInt(0, 10000, "Volume (ml): ");
         System.out.println();
         return volumeInML;
     }
@@ -145,14 +139,12 @@ public class Main {
 
     public static Material chooseMaterial() {
         printMaterials();
-        int selection = 0;
-        while (true) {
-            selection = Utils.scanInt("Material: ");
-            if (1 <= selection && selection <= Material.values().length) {
-                return Material.values()[selection - 1];
-            }
-            System.out.println("Invalid input. Enter the corresponding number.");
-        }
+        int selection;
+        int minSelection = 1;
+        int maxSelection = Material.values().length;
+        selection = Utils.scanBoundedInt(minSelection, maxSelection, "Material: ");
+        selection -= 1; // Because list displayed to user starts from 1
+        return Material.values()[selection];
     }
 
     public static void printMaterials() {
