@@ -2,13 +2,6 @@ import java.io.*;
 import java.util.ArrayList;
 
 public class Main {
-    static ArrayList<String> mainMenu = new ArrayList<>();
-        mainMenu.add("1. View items");
-        System.out.println("2. Add a bottle");
-        System.out.println("3. Add a flask");
-        System.out.println("4. Modify items");
-        System.out.println("5. Remove items");
-        System.out.println("6. Exit");
 
     public static void main(String[] args) {
         String saveLocation = "bottles.dat";
@@ -83,7 +76,7 @@ public class Main {
     }
 
     public static int getRemoveMenuChoice() {
-        int menuChoice = 0;
+        int menuChoice;
         while (true) {
             menuChoice = Utils.scanInt("#: ");
             if (1 <= menuChoice && menuChoice <= 5) {
