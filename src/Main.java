@@ -90,7 +90,6 @@ public class Main {
             case 2:
                 deleteByVolume(bottles);
         }
-        return;
     }
 
     public static void modifyItems(ArrayList<Bottle> bottles) {
@@ -115,7 +114,6 @@ public class Main {
                 bottleIterator.remove();
             }
         }
-        return;
     }
 
     public static Bottle createBottle() {
