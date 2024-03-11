@@ -67,8 +67,7 @@ public class Main {
         System.out.println();
         System.out.println("0. Return");
         System.out.println("1. Delete a single bottle");
-        System.out.println("2. Delete by brand");
-        System.out.println("3. Delete bottles not in volume range");
+        System.out.println("2. Delete bottles not in volume range");
     }
 
     public static int getMenuChoice() {
@@ -79,7 +78,7 @@ public class Main {
 
     public static void removeItems(ArrayList<Bottle> bottles) {
         printRemoveMenu();
-        int menuChoice = Utils.scanBoundedInt(0, 3, "#: ");
+        int menuChoice = Utils.scanBoundedInt(0, 2, "#: ");
         switch (menuChoice) {
             case 0:
                 return;
@@ -87,17 +86,11 @@ public class Main {
                 removeSingleBottle(bottles);
                 break;
             case 2:
-                deleteByBrand(bottles);
-                break;
-            case 3:
                 deleteByVolume(bottles);
         }
         return;
     }
 
-    public static void deleteByBrand(ArrayList<Bottle> bottles) {
-        //TODO    Delete by brand
-    }
 
     public static void deleteByVolume(ArrayList<Bottle> bottles) {
         int lowerBound = Utils.scanInt("Lower bound: ");
