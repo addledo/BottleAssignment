@@ -28,12 +28,13 @@ public class Main {
                     break;
                 case 4:
                     //Modify bottles
+                    modifyItems(bottles);
                     // IDEAS:
                     // ADD CONTENTS
                     // sort
                     // calculations
-
-                    return;
+                    // TODO   Implement these
+                    break;
                 case 5:
                     //Remove bottles
                     removeItems(bottles);
@@ -59,6 +60,7 @@ public class Main {
     }
 
     public static void printModifyMenu() {
+        System.out.println();
         System.out.println("0. Return");
         System.out.println("1. Change the contents of a bottle");
         System.out.println("2. Sort bottles by brand");
@@ -93,13 +95,20 @@ public class Main {
     }
 
     public static void modifyItems(ArrayList<Bottle> bottles) {
+        // TODO             FINISH THIS
+        printModifyMenu();
         int menuChoice = Utils.scanBoundedInt(0, 3, "#: ");
         switch (menuChoice) {
             case 0:
                 return;
             case 1:
                 //Change contents
-
+                Bottle bottle = bottles.get(chooseBottle(bottles));
+                String contents = getContents();
+                bottle.setContents(contents);
+                return;
+            case 2:
+                //
         }
     }
 
@@ -142,6 +151,7 @@ public class Main {
     }
 
     private static String getContents() {
+        System.out.println();
         System.out.println("What does it contain?");
         System.out.println("If empty, just press enter.");
         System.out.println();
@@ -219,13 +229,13 @@ public class Main {
     private static Integer chooseBottle(ArrayList<Bottle> bottles) {
         printBottles(bottles);
         int selection = Utils.scanInt("Enter the number of the bottle: ");
-        while (selection <= 0 || selection > bottles.size()) {
+        while (selection < 0 || selection > bottles.size()) {
             System.out.println("That bottle does not exist.");
             System.out.println("Try again or enter 0 to go back.");
             selection = Utils.scanInt("#: ");
         }
         selection -= 1; //User list counts from 1
-        return selection;
+        return selection; //Returns -1 for no bottle selection
     }
 
     public static void saveBottles(ArrayList<Bottle> bottles, String location) {
