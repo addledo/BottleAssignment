@@ -70,96 +70,32 @@ public class Main {
     }
 
 
-    public static void removeBottles(ArrayList<Bottle> bottles) {
-        printRemoveMenu();
-        int menuChoice = Utils.scanBoundedInt(0, 2, "#: ");
-        switch (menuChoice) {
-            case 0:
-                return;
-            case 1:
-                removeSingleBottle(bottles);
-                break;
-            case 2:
-                deleteByVolume(bottles);
-        }
-    }
-
-    public static void modifyBottles(ArrayList<Bottle> bottles) {
-        printModifyMenu();
-        int menuChoice = Utils.scanBoundedInt(0, 3, "#: ");
-        switch (menuChoice) {
-            case 0:
-                return;
-            case 1:
-                //Change contents
-                Bottle bottle = bottles.get(chooseBottle(bottles));
-                String contents = getContents();
-                bottle.setContents(contents);
-                return;
-            case 2:
-                //TODO   Sort by brand
-            case 3:
-                //TODO   Sort by volume
-        }
-    }
-
-    public static void deleteByVolume(ArrayList<Bottle> bottles) {
-        int lowerBound = Utils.scanInt("Lower bound: ");
-        int upperBound = Utils.scanInt("Upper bound: ");
-        Iterator<Bottle> bottleIterator = bottles.iterator();
-        while (bottleIterator.hasNext()) {
-            Bottle bottle = bottleIterator.next();
-            int volume = bottle.getVolumeML();
-            if (upperBound < volume || volume < lowerBound) {
-                bottleIterator.remove();
-            }
-        }
-    }
-
     public static Bottle createBottle() {
         System.out.printf("%nPlease enter the details of the bottle you'd like to add. %n");
         String brand = Utils.getBoundedString("Brand: ", 35, false);
-        int volumeInML = getVolumeInML();
+        int volumeInML = askVolume();
         System.out.println();
-        Material material = chooseMaterial();
+        Material material = askMaterial();
         return new Bottle(brand, volumeInML, material);
     }
 
     public static Bottle createFlask() {
         System.out.printf("%nPlease enter the details of the flask you'd like to add. %n");
         String brand = Utils.getBoundedString("Brand: ", 35, false);
-        int volumeInML = getVolumeInML();
-        Material material = chooseMaterial();
-        int keepWarmHours = getKeepWarmHours();
+        int volumeInML = askVolume();
+        Material material = askMaterial();
+        int keepWarmHours = askKeepWarmHours();
         return new Flask(brand, volumeInML, material, keepWarmHours);
     }
 
-    private static int getKeepWarmHours() {
-        // TODO        Can I name the function this? (same as flask getter)
-        // TODO        Is it better to separate code like below or to just return the result?
-        System.out.printf("%nPlease enter the keep warm time of your flask.");
-        int keepWarmHours;
-        keepWarmHours = Utils.scanInt("Hours: ");
-        return keepWarmHours;
-    }
-
-    private static String getContents() {
-        System.out.println();
-        System.out.println("What does it contain?");
-        System.out.println("If empty, just press enter.");
-        System.out.println();
-        return Utils.getBoundedString("Contains: ", 45, true);
-    }
-
-    private static int getVolumeInML() {
+    private static int askVolume() {
         int volumeInML;
         volumeInML = Utils.scanBoundedInt(0, 10000, "Volume (ml): ");
         System.out.println();
         return volumeInML;
     }
 
-
-    public static Material chooseMaterial() {
+    public static Material askMaterial() {
         printMaterials();
         int selection;
         int minSelection = 1;
@@ -169,11 +105,21 @@ public class Main {
         return Material.values()[selection];
     }
 
-    public static void printMaterials() {
-        for (int i = 0; i < Material.values().length; i++) {
-            String material = Material.values()[i].displayName;
-            System.out.printf("[%d] %s%n", i + 1, material);
-        }
+    private static int askKeepWarmHours() {
+        // TODO        Can I name the function this? (same as flask getter)
+        // TODO        Is it better to separate code like below or to just return the result?
+        System.out.printf("%nPlease enter the keep warm time of your flask.");
+        int keepWarmHours;
+        keepWarmHours = Utils.scanInt("Hours: ");
+        return keepWarmHours;
+    }
+
+    private static String askContents() {
+        System.out.println();
+        System.out.println("What does it contain?");
+        System.out.println("If empty, just press enter.");
+        System.out.println();
+        return Utils.getBoundedString("Contains: ", 45, true);
     }
 
     public static void printBottles(ArrayList<Bottle> bottles) {
@@ -190,6 +136,27 @@ public class Main {
 
     }
 
+    public static void printMaterials() {
+        for (int i = 0; i < Material.values().length; i++) {
+            String material = Material.values()[i].displayName;
+            System.out.printf("[%d] %s%n", i + 1, material);
+        }
+    }
+
+    public static void removeBottles(ArrayList<Bottle> bottles) {
+        printRemoveMenu();
+        int menuChoice = Utils.scanBoundedInt(0, 2, "#: ");
+        switch (menuChoice) {
+            case 0:
+                return;
+            case 1:
+                removeSingleBottle(bottles);
+                break;
+            case 2:
+                deleteByVolume(bottles);
+        }
+    }
+
     public static void removeSingleBottle(ArrayList<Bottle> bottles) {
         if (bottles.isEmpty()) {
             System.out.println("There are no bottles to remove. Press enter to go back");
@@ -201,6 +168,38 @@ public class Main {
             return;
         }
         bottles.remove(selection);
+    }
+
+    public static void deleteByVolume(ArrayList<Bottle> bottles) {
+        int lowerBound = Utils.scanInt("Lower bound: ");
+        int upperBound = Utils.scanInt("Upper bound: ");
+        Iterator<Bottle> bottleIterator = bottles.iterator();
+        while (bottleIterator.hasNext()) {
+            Bottle bottle = bottleIterator.next();
+            int volume = bottle.getVolumeML();
+            if (upperBound < volume || volume < lowerBound) {
+                bottleIterator.remove();
+            }
+        }
+    }
+
+    public static void modifyBottles(ArrayList<Bottle> bottles) {
+        printModifyMenu();
+        int menuChoice = Utils.scanBoundedInt(0, 3, "#: ");
+        switch (menuChoice) {
+            case 0:
+                return;
+            case 1:
+                //Change contents
+                Bottle bottle = bottles.get(chooseBottle(bottles));
+                String contents = askContents();
+                bottle.setContents(contents);
+                return;
+            case 2:
+                //TODO   Sort by brand
+            case 3:
+                //TODO   Sort by volume
+        }
     }
 
     private static Integer chooseBottle(ArrayList<Bottle> bottles) {
