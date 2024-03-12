@@ -88,7 +88,7 @@ public class Main {
         return new Bottle(brand, volumeInML, material);
     }
 
-    public static Bottle createFlask() {
+    public static Flask createFlask() {
         System.out.printf("%nPlease enter the details of the flask you'd like to add. %n");
         String brand = Utils.getBoundedString("Brand: ", 35, false);
         int volumeInML = askVolume();
