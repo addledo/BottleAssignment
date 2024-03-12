@@ -137,7 +137,6 @@ public class Main {
         if (bottles.isEmpty()) {
             System.out.println("No bottles found.");
         }
-
     }
 
     public static boolean userWantsToFilter() {
@@ -152,18 +151,9 @@ public class Main {
 
     private static void viewFilteredBottles(ArrayList<Bottle> bottles) {
         ArrayList<String> brands = getBrands(bottles);
-        String chosenBrand = chooseBrand(brands);
+        String chosenBrandName = chooseBrand(brands);
         System.out.println();
-        System.out.println(chosenBrand + " bottles:");
-        int counter = 1;
-        for (Bottle bottle : bottles) {
-            String brand = bottle.getBrand();
-            boolean brandMatches = brand.equals(chosenBrand);
-            if (brandMatches) {
-                System.out.printf("[%d] %s %n", counter, bottle);
-                counter ++;
-            }
-        }
+        printBottlesMatchingBrand(bottles, chosenBrandName);
         System.out.println();
         System.out.println("Press enter to return");
         Utils.waitForUser();
@@ -183,8 +173,21 @@ public class Main {
         Utils.printNumberedListFrom1(brands);
         int len = brands.size();
         int brandChoiceNumber = Utils.scanBoundedInt(1, len, "#: ");
-        brandChoiceNumber --;     //Adjusts to align with displayed list starting from 1
+        brandChoiceNumber--;     //Adjusts to align with displayed list starting from 1
         return brands.get(brandChoiceNumber);
+    }
+
+    private static void printBottlesMatchingBrand(ArrayList<Bottle> bottles, String chosenBrandName) {
+        System.out.println(chosenBrandName + " bottles:");
+        int counter = 1;
+        for (Bottle bottle : bottles) {
+            String brand = bottle.getBrand();
+            boolean brandMatches = brand.equals(chosenBrandName);
+            if (brandMatches) {
+                System.out.printf("[%d] %s %n", counter, bottle);
+                counter++;
+            }
+        }
     }
 
     public static void printMaterials() {
