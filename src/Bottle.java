@@ -55,7 +55,6 @@ public class Bottle implements Serializable {
     }
 
     public String toString() {
-
         String materialName = material.displayName;
         String contains = "Contains: " + contents;
         return String.format("%s, %dml, %s, %s", brand, volumeML, materialName, contains);

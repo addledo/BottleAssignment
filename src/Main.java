@@ -1,6 +1,9 @@
 import java.io.*;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Iterator;
+import java.util.Scanner;
 
 public class Main {
 
@@ -15,8 +18,12 @@ public class Main {
                 case 1:
                     // View collection
                     printBottles(bottles);
-                    System.out.printf("%nPress enter to return to the menu.");
-                    Utils.waitForUser();
+                    System.out.println();
+                    System.out.println("Enter 1 to filter by brand, or anything else to return.");
+                    if (userWantsToFilter()) {
+                        viewFilteredBottles(bottles);
+                    }
+
                     break;
                 case 2:
                     //Add bottle
@@ -106,7 +113,6 @@ public class Main {
     }
 
     private static int askKeepWarmHours() {
-        // TODO        Can I name the function this? (same as flask getter)
         // TODO        Is it better to separate code like below or to just return the result?
         System.out.printf("%nPlease enter the keep warm time of your flask.");
         int keepWarmHours;
@@ -128,12 +134,61 @@ public class Main {
         for (int i = 0; i < bottles.size(); i++) {
             int displayNumber = i + 1;
             Bottle bottle = bottles.get(i);
-            System.out.printf("[%d] %s", displayNumber, bottle);
+            System.out.printf("[%d] %s %n", displayNumber, bottle);
         }
         if (bottles.isEmpty()) {
             System.out.println("No bottles found.");
         }
 
+    }
+
+    public static boolean userWantsToFilter() {
+        boolean userWantsToFilter = false;
+        Scanner scanner = new Scanner(System.in);
+        String input = scanner.nextLine().trim();
+        if (input.equals("1")) {
+            userWantsToFilter = true;
+        }
+        return userWantsToFilter;
+    }
+
+    private static void viewFilteredBottles(ArrayList<Bottle> bottles) {
+        ArrayList<String> brands = getBrands(bottles);
+        String chosenBrand = chooseBrand(brands);
+        System.out.println();
+        System.out.println(chosenBrand + " bottles:");
+        for (Bottle bottle : bottles) {
+            String brand = bottle.getBrand();
+            boolean brandMatches = brand.equals(chosenBrand);
+            if (brandMatches) {
+                System.out.println(bottle);
+            }
+        }
+        System.out.println();
+        System.out.println("Press enter to return");
+        Utils.waitForUser();
+    }
+
+    private static String chooseBrand(ArrayList<String> brands) {
+        System.out.println("Choose a brand: ");
+        for (int i = 0; i < brands.size(); i++) {
+            int displayNumber = i + 1;
+            String brand = brands.get(i);
+            System.out.printf("[%d] %s %n", displayNumber, brand);
+        }
+        int len = brands.size();
+        int brandChoiceNumber = Utils.scanBoundedInt(1, len, "#: ");
+        brandChoiceNumber --;     //Adjusts to align with displayed list starting from 1
+        return brands.get(brandChoiceNumber);
+    }
+
+    private static ArrayList<String> getBrands(ArrayList<Bottle> bottles) {
+        HashSet<String> brands = new HashSet<>();
+        for (Bottle bottle : bottles) {
+            String brand = bottle.getBrand();
+            brands.add(brand);
+        }
+        return new ArrayList<>(brands);
     }
 
     public static void printMaterials() {
