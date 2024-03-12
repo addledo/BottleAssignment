@@ -40,31 +40,6 @@ public final class Utils {
     }
 
 
-//    public static String getLimitedLengthString(String prompt) {
-//        int limit = 60;
-//        Scanner scanner = new Scanner(System.in);
-//        String string = scanner.nextLine().trim();
-//        while (string.trim().length() > limit) {
-//            System.out.println("That value is too long. Enter 60 characters or less.");
-//            string = scanner.nextLine();
-//        }
-//        return string;
-//    }
-
-//    public static String getBoundedString(String prompt) {
-//        String string = "";
-//        Scanner scanner = new Scanner(System.in);
-//        while (true) {
-//            System.out.print(prompt);
-//            string = scanner.nextLine();
-//            if (!string.isBlank()) {
-//                break;
-//            }
-//            System.out.printf("%nField must not be empty. %n");
-//        }
-//        return string.trim();
-//    }
-
     public static String getBoundedString(String prompt, int limit, boolean shouldAllowBlanks) {
         String string = "";
         Scanner scanner = new Scanner(System.in);
