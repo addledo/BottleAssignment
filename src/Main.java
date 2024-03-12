@@ -155,11 +155,13 @@ public class Main {
         String chosenBrand = chooseBrand(brands);
         System.out.println();
         System.out.println(chosenBrand + " bottles:");
+        int counter = 1;
         for (Bottle bottle : bottles) {
             String brand = bottle.getBrand();
             boolean brandMatches = brand.equals(chosenBrand);
             if (brandMatches) {
-                System.out.println(bottle);
+                System.out.printf("[%d] %s %n", counter, bottle);
+                counter ++;
             }
         }
         System.out.println();
