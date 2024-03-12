@@ -1,3 +1,5 @@
+import jdk.jshell.execution.Util;
+
 import java.io.*;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
@@ -169,19 +171,6 @@ public class Main {
         Utils.waitForUser();
     }
 
-    private static String chooseBrand(ArrayList<String> brands) {
-        System.out.println("Choose a brand: ");
-        for (int i = 0; i < brands.size(); i++) {
-            int displayNumber = i + 1;
-            String brand = brands.get(i);
-            System.out.printf("[%d] %s %n", displayNumber, brand);
-        }
-        int len = brands.size();
-        int brandChoiceNumber = Utils.scanBoundedInt(1, len, "#: ");
-        brandChoiceNumber --;     //Adjusts to align with displayed list starting from 1
-        return brands.get(brandChoiceNumber);
-    }
-
     private static ArrayList<String> getBrands(ArrayList<Bottle> bottles) {
         HashSet<String> brands = new HashSet<>();
         for (Bottle bottle : bottles) {
@@ -189,6 +178,15 @@ public class Main {
             brands.add(brand);
         }
         return new ArrayList<>(brands);
+    }
+
+    private static String chooseBrand(ArrayList<String> brands) {
+        System.out.println("Choose a brand: ");
+        Utils.printNumberedListFrom1(brands);
+        int len = brands.size();
+        int brandChoiceNumber = Utils.scanBoundedInt(1, len, "#: ");
+        brandChoiceNumber --;     //Adjusts to align with displayed list starting from 1
+        return brands.get(brandChoiceNumber);
     }
 
     public static void printMaterials() {
