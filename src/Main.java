@@ -190,21 +190,13 @@ public class Main {
         System.out.println("BOTTLES: ");
         for (int i = 0; i < bottles.size(); i++) {
             int displayNumber = i + 1;
-            String bottleInfo = formatBottle(displayNumber, bottles.get(i));
-            System.out.println(bottleInfo);
+            Bottle bottle = bottles.get(i);
+            System.out.printf("[%d] %s", displayNumber, bottle);
         }
         if (bottles.isEmpty()) {
             System.out.println("No bottles found.");
         }
 
-    }
-
-    public static String formatBottle(int num, Bottle bottle) {
-        String brand = bottle.getBrand();
-        int volume = bottle.getVolumeML();
-        String material = bottle.getMaterial().displayName;
-        String contents = "Contains: " + bottle.getContents();
-        return String.format("[%d] %s, %dml, %s, %s", num, brand, volume, material, contents);
     }
 
     public static void removeSingleBottle(ArrayList<Bottle> bottles) {
