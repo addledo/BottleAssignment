@@ -1,6 +1,6 @@
 import java.io.Serializable;
 
-public class Bottle implements Serializable {
+public class Bottle implements Serializable, Comparable<Bottle> {
 
 
     private final String brand;
@@ -58,5 +58,9 @@ public class Bottle implements Serializable {
         String materialName = material.displayName;
         String contains = "Contains: " + contents;
         return String.format("%s, %dml, %s, %s", brand, volumeML, materialName, contains);
+    }
+
+    public int compareTo(Bottle o) {
+        return volumeML - o.volumeML;
     }
 }
