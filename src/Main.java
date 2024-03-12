@@ -9,8 +9,8 @@ public class Main {
         ArrayList<Bottle> bottles = loadBottles(saveLocation);
 
         while (true) {
-            printMenu();
-            int menuChoice = getMenuChoice();
+            printMainMenu();
+            int menuChoice = Utils.scanBoundedInt(1, 6, "#: ");
             switch (menuChoice) {
                 case 1:
                     // View collection
@@ -44,7 +44,7 @@ public class Main {
     }
 
 
-    public static void printMenu() {
+    public static void printMainMenu() {
         System.out.printf("%nMENU %n");
         System.out.println("1. View bottles");
         System.out.println("2. Add a bottle");
@@ -69,11 +69,6 @@ public class Main {
         System.out.println("2. Delete bottles not in volume range");
     }
 
-    public static int getMenuChoice() {
-        int menuChoice;
-        menuChoice = Utils.scanBoundedInt(1, 6, "#: ");
-        return menuChoice;
-    }
 
     public static void removeBottles(ArrayList<Bottle> bottles) {
         printRemoveMenu();
@@ -90,7 +85,6 @@ public class Main {
     }
 
     public static void modifyBottles(ArrayList<Bottle> bottles) {
-        // TODO             FINISH THIS
         printModifyMenu();
         int menuChoice = Utils.scanBoundedInt(0, 3, "#: ");
         switch (menuChoice) {
