@@ -28,16 +28,11 @@ public class Main {
                     break;
                 case 4:
                     //Modify bottles
-                    modifyItems(bottles);
-                    // IDEAS:
-                    // ADD CONTENTS
-                    // sort
-                    // calculations
-                    // TODO   Implement these
+                    modifyBottles(bottles);
                     break;
                 case 5:
                     //Remove bottles
-                    removeItems(bottles);
+                    removeBottles(bottles);
                     break;
                 case 6:
                     //Exit
@@ -51,11 +46,11 @@ public class Main {
 
     public static void printMenu() {
         System.out.printf("%nMENU %n");
-        System.out.println("1. View items");
+        System.out.println("1. View bottles");
         System.out.println("2. Add a bottle");
         System.out.println("3. Add a flask");
-        System.out.println("4. Modify items");
-        System.out.println("5. Remove items");
+        System.out.println("4. Modify bottles");
+        System.out.println("5. Remove bottles");
         System.out.println("6. Exit");
     }
 
@@ -80,7 +75,7 @@ public class Main {
         return menuChoice;
     }
 
-    public static void removeItems(ArrayList<Bottle> bottles) {
+    public static void removeBottles(ArrayList<Bottle> bottles) {
         printRemoveMenu();
         int menuChoice = Utils.scanBoundedInt(0, 2, "#: ");
         switch (menuChoice) {
@@ -94,7 +89,7 @@ public class Main {
         }
     }
 
-    public static void modifyItems(ArrayList<Bottle> bottles) {
+    public static void modifyBottles(ArrayList<Bottle> bottles) {
         // TODO             FINISH THIS
         printModifyMenu();
         int menuChoice = Utils.scanBoundedInt(0, 3, "#: ");
@@ -108,7 +103,9 @@ public class Main {
                 bottle.setContents(contents);
                 return;
             case 2:
-                //
+                //TODO   Sort by brand
+            case 3:
+                //TODO   Sort by volume
         }
     }
 
