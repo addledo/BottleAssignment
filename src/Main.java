@@ -133,11 +133,7 @@ public class Main {
     public static void printBottles(ArrayList<Bottle> bottles) {
         System.out.println();
         System.out.println("BOTTLES: ");
-        for (int i = 0; i < bottles.size(); i++) {
-            int displayNumber = i + 1;
-            Bottle bottle = bottles.get(i);
-            System.out.printf("[%d] %s %n", displayNumber, bottle);
-        }
+        Utils.printNumberedListFrom1(bottles);
         if (bottles.isEmpty()) {
             System.out.println("No bottles found.");
         }
