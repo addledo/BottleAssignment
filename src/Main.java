@@ -144,6 +144,8 @@ public class Main {
     }
 
     private static int getKeepWarmHours() {
+        // TODO        Can I name the function this? (same as flask getter)
+        // TODO        Is it better to separate code like below or to just return the result?
         System.out.printf("%nPlease enter the keep warm time of your flask.");
         int keepWarmHours;
         keepWarmHours = Utils.scanInt("Hours: ");
@@ -165,16 +167,6 @@ public class Main {
         return volumeInML;
     }
 
-//    public static Flask createFlask() {
-//        //
-//        //TODO: CAN I CREATE A BOTTLE AND CAST TO A FLASK OR SHOULD I USE THE FLASK CONSTRUCTOR?
-//        //
-//        Flask flask = (Flask) createBottle();
-//        System.out.printf("%nPlease enter the keep warm time of your flask.");
-//        int keepWarmHours = Utils.scanInt("Hours: ");
-//
-//        return flask;
-//    }
 
     public static Material chooseMaterial() {
         printMaterials();
