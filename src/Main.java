@@ -186,9 +186,11 @@ public class Main {
     }
 
     public static void printBottles(ArrayList<Bottle> bottles) {
-        System.out.printf("%nBOTTLES: %n");
+        System.out.println();
+        System.out.println("BOTTLES: ");
         for (int i = 0; i < bottles.size(); i++) {
-            String bottleInfo = formatBottle(i + 1, bottles.get(i));
+            int displayNumber = i + 1;
+            String bottleInfo = formatBottle(displayNumber, bottles.get(i));
             System.out.println(bottleInfo);
         }
         if (bottles.isEmpty()) {
