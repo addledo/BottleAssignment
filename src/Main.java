@@ -2,10 +2,7 @@ import jdk.jshell.execution.Util;
 
 import java.io.*;
 import java.lang.reflect.Array;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.Scanner;
+import java.util.*;
 
 public class Main {
 
@@ -252,7 +249,8 @@ public class Main {
             case 2:
                 //TODO   Sort by brand
             case 3:
-                //TODO   Sort by volume
+                //Sort by volume
+                Collections.sort(bottles);
         }
     }
 
