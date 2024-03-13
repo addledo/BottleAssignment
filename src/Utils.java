@@ -42,8 +42,8 @@ public final class Utils {
     }
 
 
-    public static String getBoundedString(String prompt, int limit, boolean shouldAllowBlanks) {
-        String string = "";
+    public static String scanBoundedString(String prompt, int limit, boolean shouldAllowBlanks) {
+        String string;
         Scanner scanner = new Scanner(System.in);
         while (true) {
             System.out.print(prompt);

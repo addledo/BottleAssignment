@@ -85,7 +85,7 @@ public class Main {
 
     public static Bottle createBottle() {
         System.out.printf("%nPlease enter the details of the bottle you'd like to add. %n");
-        String brand = Utils.getBoundedString("Brand: ", 35, false);
+        String brand = Utils.scanBoundedString("Brand: ", 35, false);
         int volumeInML = askVolume();
         System.out.println();
         Material material = askMaterial();
@@ -94,7 +94,7 @@ public class Main {
 
     public static Flask createFlask() {
         System.out.printf("%nPlease enter the details of the flask you'd like to add. %n");
-        String brand = Utils.getBoundedString("Brand: ", 35, false);
+        String brand = Utils.scanBoundedString("Brand: ", 35, false);
         int volumeInML = askVolume();
         Material material = askMaterial();
         int keepWarmHours = askKeepWarmHours();
@@ -103,7 +103,7 @@ public class Main {
 
     private static int askVolume() {
         int volumeInML;
-        volumeInML = Utils.scanBoundedInt(0, 10000, "Volume (ml): ");
+        volumeInML = Utils.scanBoundedInt(1, 10000, "Volume (ml): ");
         System.out.println();
         return volumeInML;
     }
@@ -120,7 +120,8 @@ public class Main {
 
     private static int askKeepWarmHours() {
         // TODO        Is it better to separate code like below or to just return the result?
-        System.out.printf("%nPlease enter the keep warm time of your flask.");
+        System.out.println();
+        System.out.println("Please enter the keep warm time of your flask.");
         int keepWarmHours;
         keepWarmHours = Utils.scanInt("Hours: ");
         return keepWarmHours;
@@ -131,7 +132,7 @@ public class Main {
         System.out.println("What does it contain?");
         System.out.println("If empty, just press enter.");
         System.out.println();
-        return Utils.getBoundedString("Contains: ", 45, true);
+        return Utils.scanBoundedString("Contains: ", 45, true);
     }
 
     public static void printBottles(ArrayList<Bottle> bottles) {
