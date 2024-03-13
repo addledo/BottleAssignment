@@ -247,7 +247,9 @@ public class Main {
                 bottle.setContents(contents);
                 return;
             case 2:
-                //TODO   Sort by brand
+                //FIXME    Sort by brand not working correctly
+                BottleBrandComparator brandComparator = new BottleBrandComparator();
+                bottles.sort(brandComparator);
             case 3:
                 //Sort by volume
                 Collections.sort(bottles);
