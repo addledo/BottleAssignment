@@ -55,7 +55,8 @@ public class Main {
 
 
     public static void printMainMenu() {
-        System.out.printf("%nMENU %n");
+        System.out.println();
+        System.out.println("-- MENU --");
         System.out.println("1. View bottles");
         System.out.println("2. Add a bottle");
         System.out.println("3. Add a flask");
@@ -66,6 +67,7 @@ public class Main {
 
     public static void printModifyMenu() {
         System.out.println();
+        System.out.println("-- MODIFY MENU --");
         System.out.println("0. Return");
         System.out.println("1. Change the contents of a bottle");
         System.out.println("2. Sort bottles by brand");
@@ -74,6 +76,7 @@ public class Main {
 
     public static void printRemoveMenu() {
         System.out.println();
+        System.out.println("-- REMOVE MENU --");
         System.out.println("0. Return");
         System.out.println("1. Delete a single bottle");
         System.out.println("2. Delete bottles not in volume range");
@@ -156,7 +159,6 @@ public class Main {
         System.out.println();
         printBottlesMatchingBrand(bottles, chosenBrandName);
         System.out.println();
-        System.out.println("Press enter to return");
         Utils.waitForUser();
     }
 
@@ -214,7 +216,7 @@ public class Main {
 
     public static void removeSingleBottle(ArrayList<Bottle> bottles) {
         if (bottles.isEmpty()) {
-            System.out.println("There are no bottles to remove. Press enter to go back");
+            System.out.println("There are no bottles to remove.");
             Utils.waitForUser();
             return;
         }
@@ -242,33 +244,48 @@ public class Main {
     public static void modifyBottles(ArrayList<Bottle> bottles) {
         printModifyMenu();
         int menuChoice = Utils.scanBoundedInt(0, 3, "#: ");
+        System.out.println();
         switch (menuChoice) {
             case 0:
                 return;
             case 1:
-                //Change contents
-                Optional<Bottle> optionalBottle = chooseBottleFrom(bottles);
-                if (optionalBottle.isEmpty()) {
-                    return;
-                }
-                Bottle bottle = optionalBottle.get();
-                String contents = askContents();
-                bottle.setContents(contents);
+                changeContentsOfABottle(bottles);
                 return;
             case 2:
-                //FIXME    Sort by brand not working correctly
-                BottleBrandComparator brandComparator = new BottleBrandComparator();
-                bottles.sort(brandComparator);
+                sortByBrand(bottles);
+                return;
             case 3:
-                //Sort by volume
-                Collections.sort(bottles);
+                sortByVolume(bottles);
         }
     }
 
+    private static void changeContentsOfABottle(ArrayList<Bottle> bottles) {
+        Optional<Bottle> optionalBottle = chooseBottleFrom(bottles);
+        if (optionalBottle.isEmpty()) {
+            return;
+        }
+        Bottle bottle = optionalBottle.get();
+        String contents = askContents();
+        bottle.setContents(contents);
+    }
+
+    private static void sortByBrand(ArrayList<Bottle> bottles) {
+        BottleBrandComparator brandComparator = new BottleBrandComparator();
+        bottles.sort(brandComparator);
+        System.out.println("Sort complete");
+        Utils.waitForUser();
+    }
+
+    private static void sortByVolume(ArrayList<Bottle> bottles) {
+        Collections.sort(bottles);
+        System.out.println("Sort complete");
+        Utils.waitForUser();
+    }
+
     private static Optional<Bottle> chooseBottleFrom(ArrayList<Bottle> bottles) {
-        System.out.println("[0] Return");
         printBottles(bottles);
         int max = bottles.size();
+        System.out.println("[0] Return");
         int bottleNumber = Utils.scanBoundedInt(0, max, "Enter the number of the bottle: ");
         if (bottleNumber == 0) {
             return Optional.empty();
