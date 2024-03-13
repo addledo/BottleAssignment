@@ -13,13 +13,7 @@ public class Main {
             switch (menuChoice) {
                 case 1:
                     // View collection
-                    printBottles(bottles);
-                    System.out.println();
-                    System.out.println("Enter 1 to filter by brand, or anything else to return.");
-                    if (userWantsToFilter()) {
-                        viewFilteredBottles(bottles);
-                    }
-
+                    viewCollection(bottles);
                     break;
                 case 2:
                     //Add bottle
@@ -44,6 +38,19 @@ public class Main {
             }
         }
 
+    }
+
+    private static void viewCollection(ArrayList<Bottle> bottles) {
+        while (true) {
+            printBottles(bottles);
+            System.out.println();
+            System.out.println("Enter 1 to filter by brand, or anything else to return.");
+            if (userWantsToFilter()) {
+                filterBottles(bottles);
+            } else {
+                return;
+            }
+        }
     }
 
 
@@ -143,9 +150,9 @@ public class Main {
         return userWantsToFilter;
     }
 
-    private static void viewFilteredBottles(ArrayList<Bottle> bottles) {
-        ArrayList<String> brands = getBrands(bottles);
-        String chosenBrandName = chooseBrand(brands);
+    private static void filterBottles(ArrayList<Bottle> bottles) {
+        ArrayList<String> existingBrands = getBrands(bottles);
+        String chosenBrandName = chooseBrandFrom(existingBrands);
         System.out.println();
         printBottlesMatchingBrand(bottles, chosenBrandName);
         System.out.println();
@@ -162,7 +169,7 @@ public class Main {
         return new ArrayList<>(brands);
     }
 
-    private static String chooseBrand(ArrayList<String> brands) {
+    private static String chooseBrandFrom(ArrayList<String> brands) {
         System.out.println("Choose a brand: ");
         Utils.printNumberedListFrom1(brands);
         int len = brands.size();
