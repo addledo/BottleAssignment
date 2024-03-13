@@ -55,9 +55,12 @@ public class Bottle implements Serializable, Comparable<Bottle> {
     }
 
     public String toString() {
-        String materialName = material.displayName;
-        String contains = "Contains: " + contents;
-        return String.format("%s, %dml, %s, %s", brand, volumeML, materialName, contains);
+        String type = "BOTTLE";
+        String brand = String.format("%-20s", this.brand);
+        String volume = String.format("%-9s", volumeML+"ml");
+        String materialName = String.format("%-10s", material.displayName);
+//        String contains = "Contains: " + contents;
+        return String.format("%s --- %s | %s | %s | %s", type, brand, volume, materialName, contents);
     }
 
     public int compareTo(Bottle o) {

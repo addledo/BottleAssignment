@@ -137,7 +137,7 @@ public class Main {
 
     public static void printBottles(ArrayList<Bottle> bottles) {
         System.out.println();
-        System.out.println("BOTTLES: ");
+        System.out.println("-- BOTTLES --");
         Utils.printNumberedListFrom1(bottles);
         if (bottles.isEmpty()) {
             System.out.println("No bottles found.");
