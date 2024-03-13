@@ -106,7 +106,6 @@ public class Main {
     private static int askVolume() {
         int volumeInML;
         volumeInML = Utils.scanBoundedInt(1, 10000, "Volume (ml): ");
-        System.out.println();
         return volumeInML;
     }
 
