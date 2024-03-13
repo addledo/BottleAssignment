@@ -48,7 +48,7 @@ public class Bottle implements Serializable, Comparable<Bottle> {
 
     public void setContents(String contents) {
         if (contents.isBlank()) {
-            contents = "EMPTY";
+            this.contents = "EMPTY";
         } else {
             this.contents = contents;
         }
