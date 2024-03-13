@@ -1,7 +1,4 @@
-import jdk.jshell.execution.Util;
-
 import java.io.*;
-import java.lang.reflect.Array;
 import java.util.*;
 
 public class Main {
@@ -214,11 +211,12 @@ public class Main {
             Utils.waitForUser();
             return;
         }
-        int selection = chooseBottle(bottles);
-        if (selection == -1) {
+        Optional<Bottle> optionalBottle = chooseBottleFrom(bottles);
+        if (optionalBottle.isEmpty()) {
             return;
         }
-        bottles.remove(selection);
+        Bottle chosenBottle = optionalBottle.get();
+        bottles.remove(chosenBottle);
     }
 
     public static void deleteByVolume(ArrayList<Bottle> bottles) {
@@ -242,7 +240,11 @@ public class Main {
                 return;
             case 1:
                 //Change contents
-                Bottle bottle = bottles.get(chooseBottle(bottles));
+                Optional<Bottle> optionalBottle = chooseBottleFrom(bottles);
+                if (optionalBottle.isEmpty()) {
+                    return;
+                }
+                Bottle bottle = optionalBottle.get();
                 String contents = askContents();
                 bottle.setContents(contents);
                 return;
@@ -256,7 +258,8 @@ public class Main {
         }
     }
 
-    private static Integer chooseBottle(ArrayList<Bottle> bottles) {
+    private static Optional<Bottle> chooseBottleFrom(ArrayList<Bottle> bottles) {
+        System.out.println("[0] Return");
         printBottles(bottles);
         int selection = Utils.scanInt("Enter the number of the bottle: ");
         while (selection < 0 || selection > bottles.size()) {
@@ -265,7 +268,11 @@ public class Main {
             selection = Utils.scanInt("#: ");
         }
         selection -= 1; //User list counts from 1
-        return selection; //Returns -1 for no bottle selection
+        if (selection == -1) {
+            return Optional.empty();
+        }
+        Bottle bottle = bottles.get(selection);
+        return Optional.of(bottle);
     }
 
     public static void saveBottles(ArrayList<Bottle> bottles, String location) {
