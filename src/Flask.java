@@ -13,4 +13,11 @@ public class Flask extends Bottle {
     public void setKeepWarmHours(int keepWarmHours) {
         this.keepWarmHours = keepWarmHours;
     }
+
+    @Override
+    public String toString() {
+        String warmTime = "Warm Time: " + keepWarmHours + " hours";
+        return String.format("%s %s", super.toString(), warmTime);
+
+    }
 }

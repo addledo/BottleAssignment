@@ -3,7 +3,8 @@ import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public final class Utils {
-    private Utils() {}
+    private Utils() {
+    }
 
     public static int scanInt(String prompt) {
         int num;
@@ -28,10 +29,10 @@ public final class Utils {
             num = scanInt(prompt);
             if (min <= num && num <= max) {
                 return num;
-            }
-            else {
+            } else {
                 System.out.printf("%nNumber must be between %d and %d.%n", min, max);
             }
+            //TODO   Else or no?
         }
     }
 
@@ -47,14 +48,17 @@ public final class Utils {
         Scanner scanner = new Scanner(System.in);
         while (true) {
             System.out.print(prompt);
-            string = scanner.nextLine();
-            string = string.trim();
-            if ((!string.isBlank() || shouldAllowBlanks) && string.length() < limit) {
-                break;
+            string = scanner.nextLine().trim();
+            boolean passesBlankCheck = !string.isBlank() || shouldAllowBlanks;
+            boolean lengthIsInLimit = string.length() <= limit;
+            if (passesBlankCheck && lengthIsInLimit) {
+                return string;
+            } else if (!lengthIsInLimit) {
+                System.out.println("Field must be no more than " + limit + " characters.");
+            } else {
+                System.out.println("Field must not be empty.");
             }
-            System.out.printf("%nField must not be empty and must be no more than %d characters %n", limit);
         }
-        return string;
     }
 
     public static void printNumberedListFrom1(ArrayList<?> list) {

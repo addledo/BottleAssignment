@@ -132,7 +132,7 @@ public class Main {
         System.out.println("What does it contain?");
         System.out.println("If empty, just press enter.");
         System.out.println();
-        return Utils.scanBoundedString("Contains: ", 45, true);
+        return Utils.scanBoundedString("Contains: ", 40, true);
     }
 
     public static void printBottles(ArrayList<Bottle> bottles) {
