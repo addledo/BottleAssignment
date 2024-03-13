@@ -1,6 +1,6 @@
 public class Flask extends Bottle {
 
-    int keepWarmHours;
+    private final int keepWarmHours;
     public Flask(String brand, int volumeML, Material material, int keepWarmHours) {
         super(brand, volumeML, material);
         this.keepWarmHours = keepWarmHours;
