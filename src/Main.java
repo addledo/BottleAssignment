@@ -85,7 +85,7 @@ public class Main {
 
     public static Bottle createBottle() {
         System.out.printf("%nPlease enter the details of the bottle you'd like to add. %n");
-        String brand = Utils.scanBoundedString("Brand: ", 35, false);
+        String brand = Utils.scanBoundedString("Brand: ", 20, false);
         int volumeInML = askVolume();
         System.out.println();
         Material material = askMaterial();
@@ -94,7 +94,7 @@ public class Main {
 
     public static Flask createFlask() {
         System.out.printf("%nPlease enter the details of the flask you'd like to add. %n");
-        String brand = Utils.scanBoundedString("Brand: ", 35, false);
+        String brand = Utils.scanBoundedString("Brand: ", 20, false);
         int volumeInML = askVolume();
         Material material = askMaterial();
         int keepWarmHours = askKeepWarmHours();

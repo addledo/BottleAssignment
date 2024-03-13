@@ -55,12 +55,13 @@ public class Bottle implements Serializable, Comparable<Bottle> {
     }
 
     public String toString() {
-        String type = "BOTTLE";
+        String type = this.getClass().getName();
+        type = String.format("%-7s", type);
         String brand = String.format("%-20s", this.brand);
-        String volume = String.format("%-9s", volumeML+"ml");
+        String volume = String.format("%-8s", volumeML+"ml");
         String materialName = String.format("%-10s", material.displayName);
 //        String contains = "Contains: " + contents;
-        return String.format("%s --- %s | %s | %s | %s", type, brand, volume, materialName, contents);
+        return String.format(" %s | %s | %s | %s | %s", type, brand, volume, materialName, contents);
     }
 
     public int compareTo(Bottle o) {
