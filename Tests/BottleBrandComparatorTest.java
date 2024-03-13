@@ -1,14 +1,13 @@
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
 import java.util.ArrayList;
-import java.util.Collections;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class BottleBrandComparatorTest {
     ArrayList<Bottle> testBottles = new ArrayList<>();
+
     @BeforeEach
     void setUp() {
         testBottles.add(new Bottle("D", 500, Material.METAL, ""));
