@@ -84,7 +84,8 @@ public class Main {
 
 
     public static Bottle createBottle() {
-        System.out.printf("%nPlease enter the details of the bottle you'd like to add. %n");
+        System.out.println();
+        System.out.println("Please enter the details of the bottle you'd like to add.");
         String brand = Utils.scanBoundedString("Brand: ", 20, false);
         int volumeInML = askVolume();
         System.out.println();
@@ -93,7 +94,8 @@ public class Main {
     }
 
     public static Flask createFlask() {
-        System.out.printf("%nPlease enter the details of the flask you'd like to add. %n");
+        System.out.println();
+        System.out.println("Please enter the details of the flask you'd like to add.");
         String brand = Utils.scanBoundedString("Brand: ", 20, false);
         int volumeInML = askVolume();
         Material material = askMaterial();
