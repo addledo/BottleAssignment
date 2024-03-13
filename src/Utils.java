@@ -14,6 +14,7 @@ public final class Utils {
                 num = scanner.nextInt();
                 break;
             } catch (InputMismatchException ignored) {
+                System.out.println();
                 System.out.println("Invalid input.");
                 scanner.nextLine();
             }
@@ -29,7 +30,7 @@ public final class Utils {
                 return num;
             }
             else {
-                System.out.printf("Number must be between %d and %d.%n", min, max);
+                System.out.printf("%nNumber must be between %d and %d.%n", min, max);
             }
         }
     }

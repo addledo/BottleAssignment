@@ -12,7 +12,7 @@ public class Main {
             int menuChoice = Utils.scanBoundedInt(1, 6, "#: ");
             switch (menuChoice) {
                 case 1:
-                    // View collection
+                    //View collection
                     viewCollection(bottles);
                     break;
                 case 2:
@@ -268,17 +268,12 @@ public class Main {
     private static Optional<Bottle> chooseBottleFrom(ArrayList<Bottle> bottles) {
         System.out.println("[0] Return");
         printBottles(bottles);
-        int selection = Utils.scanInt("Enter the number of the bottle: ");
-        while (selection < 0 || selection > bottles.size()) {
-            System.out.println("That bottle does not exist.");
-            System.out.println("Try again or enter 0 to go back.");
-            selection = Utils.scanInt("#: ");
-        }
-        selection -= 1; //User list counts from 1
-        if (selection == -1) {
+        int max = bottles.size();
+        int bottleNumber = Utils.scanBoundedInt(0, max, "Enter the number of the bottle: ");
+        if (bottleNumber == 0) {
             return Optional.empty();
         }
-        Bottle bottle = bottles.get(selection);
+        Bottle bottle = bottles.get(bottleNumber - 1); //Printed list counts from 1
         return Optional.of(bottle);
     }
 
