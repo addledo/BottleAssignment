@@ -26,4 +26,12 @@ class MainTest {
     void calculateTotalVolume() {
         assertEquals(10501, Main.calculateTotalVolume(testBottles));
     }
+
+    @Test
+    void getBottlesMatchingBrand() {
+        Bottle stanleyBottle = testBottles.getFirst();
+        ArrayList<Bottle> matchingBottles = Main.getBottlesMatchingBrand(testBottles, "Stanley");
+        assertEquals(1, matchingBottles.size());
+        assertEquals(stanleyBottle, matchingBottles.getFirst());
+    }
 }
