@@ -134,12 +134,9 @@ public class Main {
     }
 
     public static int askKeepWarmHours() {
-        // TODO        Is it better to separate code like below or to just return the result?
         System.out.println();
         System.out.println("Please enter the keep warm time of your flask.");
-        int keepWarmHours;
-        keepWarmHours = Utils.scanInt("Hours: ");
-        return keepWarmHours;
+        return Utils.scanInt("Hours: ");
     }
 
     public static String askContents() {
