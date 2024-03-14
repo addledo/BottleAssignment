@@ -4,18 +4,15 @@ public class Bottle implements Serializable, Comparable<Bottle> {
 
 
     private final String brand;
-    //Should I use a final uninitialised string or an initialised variable??
-    /////--------------------------------------------------------
     private final int volumeML;
     private final Material material;
 
-    private String contents = "";
+    private String contents = "EMPTY";
 
     public Bottle(String brand, int volumeML, Material material) {
         this.brand = brand;
         this.volumeML = volumeML;
         this.material = material;
-        this.contents = "EMPTY";
     }
 
     public Bottle(String brand, int volumeML, Material material, String contents) {
@@ -52,6 +49,7 @@ public class Bottle implements Serializable, Comparable<Bottle> {
 
     public String toString() {
         String type = this.getClass().getName();
+        //Padding strings to align columns
         type = String.format("%-7s", type);
         String brand = String.format("%-20s", this.brand);
         String volume = String.format("%-8s", volumeML+"ml");
