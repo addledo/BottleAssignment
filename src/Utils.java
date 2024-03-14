@@ -13,14 +13,13 @@ public final class Utils {
             System.out.print(prompt);
             try {
                 num = scanner.nextInt();
-                break;
+                return num;
             } catch (InputMismatchException ignored) {
                 System.out.println();
                 System.out.println("Invalid input.");
                 scanner.nextLine();
             }
         }
-        return num;
     }
 
     public static int scanBoundedInt(int min, int max, String prompt) {
@@ -29,10 +28,8 @@ public final class Utils {
             num = scanInt(prompt);
             if (min <= num && num <= max) {
                 return num;
-            } else {
-                System.out.printf("%nNumber must be between %d and %d.%n", min, max);
             }
-            //TODO   More readable with or without else?
+            System.out.printf("%nNumber must be between %d and %d.%n", min, max);
         }
     }
 
