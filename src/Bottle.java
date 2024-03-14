@@ -22,11 +22,7 @@ public class Bottle implements Serializable, Comparable<Bottle> {
         this.brand = brand;
         this.volumeML = volumeML;
         this.material = material;
-        if (contents.isBlank()) {
-            this.contents = "EMPTY";
-        } else {
-            this.contents = contents;
-        }
+        setContents(contents);
     }
 
 

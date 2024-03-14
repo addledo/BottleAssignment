@@ -32,7 +32,7 @@ public final class Utils {
             } else {
                 System.out.printf("%nNumber must be between %d and %d.%n", min, max);
             }
-            //TODO   Else or no?
+            //TODO   More readable with or without else?
         }
     }
 
