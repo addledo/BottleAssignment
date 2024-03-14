@@ -1,4 +1,3 @@
-import javax.imageio.plugins.tiff.BaselineTIFFTagSet;
 import java.io.*;
 import java.util.*;
 
@@ -171,7 +170,9 @@ public class Main {
             String brand = bottle.getBrand();
             brands.add(brand);
         }
-        return new ArrayList<>(brands);
+        ArrayList<String> brandsList = new ArrayList<>(brands);
+        Collections.sort(brandsList);
+        return brandsList;
     }
 
     public static String chooseBrandFrom(ArrayList<String> brands) {
@@ -179,7 +180,7 @@ public class Main {
         Utils.printNumberedListFrom1(brands);
         int len = brands.size();
         int brandChoiceNumber = Utils.scanBoundedInt(1, len, "#: ");
-        brandChoiceNumber--;     //Adjusts to align with displayed list starting from 1
+        brandChoiceNumber--;     //Adjusts numbers as printed list starts from 1
         return brands.get(brandChoiceNumber);
     }
 
