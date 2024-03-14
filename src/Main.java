@@ -157,16 +157,20 @@ public class Main {
 
     public static void filterBottlesMenu(ArrayList<Bottle> bottles) {
         ArrayList<Bottle> filteredBottles = filterBottles(bottles);
-        System.out.println();
-        System.out.println(filteredBottles.getFirst().getBrand() + " bottles:");
-        Utils.printNumberedListFrom1(filteredBottles);
-        System.out.println();
+        printFilteredBottles(filteredBottles);
         System.out.println("0. Return");
         System.out.println("1. Calculate total volume for this brand");
         int menuChoice = Utils.scanBoundedInt(0, 1, "#: ");
         if (menuChoice == 1) {
             displayTotalVolume(filteredBottles);
         }
+    }
+
+    public static void printFilteredBottles(ArrayList<Bottle> filteredBottles) {
+        System.out.println();
+        System.out.println(filteredBottles.getFirst().getBrand() + " bottles:");
+        Utils.printNumberedListFrom1(filteredBottles);
+        System.out.println();
     }
 
     public static ArrayList<Bottle> filterBottles(ArrayList<Bottle> bottles) {
@@ -205,12 +209,6 @@ public class Main {
             }
         }
         return matchingBottles;
-    }
-
-    public static void printBottlesMatchingBrand(ArrayList<Bottle> bottles, String chosenBrandName) {
-        System.out.println(chosenBrandName + " bottles:");
-        ArrayList<Bottle> matchingBottles = getBottlesMatchingBrand(bottles, chosenBrandName);
-        Utils.printNumberedListFrom1(matchingBottles);
     }
 
     public static void printMaterials() {
