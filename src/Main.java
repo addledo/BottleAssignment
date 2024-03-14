@@ -298,7 +298,8 @@ public class Main {
     public static void displayTotalVolume(ArrayList<Bottle> bottles) {
         int totalVolume = calculateTotalVolume(bottles);
         System.out.println();
-        System.out.println(totalVolume);
+        String volumeUnit = "ml";
+        System.out.println("Total volume: " + totalVolume + volumeUnit);
         Utils.waitForUser();
     }
 
