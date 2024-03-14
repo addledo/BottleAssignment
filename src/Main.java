@@ -1,4 +1,5 @@
 import java.io.*;
+import java.lang.reflect.Array;
 import java.util.*;
 
 public class Main {
@@ -44,11 +45,24 @@ public class Main {
         while (true) {
             printBottles(bottles);
             System.out.println();
-            System.out.println("Enter 1 to filter by brand, or anything else to return.");
-            if (userWantsToFilter()) {
-                filterBottles(bottles);
-            } else {
+            if (bottles.isEmpty()) {
+                Utils.waitForUser();
                 return;
+            }
+            System.out.println("0. Return");
+            System.out.println("1. Filter by brand");
+            System.out.println("2. Calculate total volume");
+            int menuChoice = Utils.scanBoundedInt(0, 2, "#: ");
+            switch (menuChoice) {
+                case 0:
+                    return;
+                case 1:
+                    filterBottles(bottles);
+                    break;
+                case 2:
+                    displayTotalVolume(bottles);
+                    break;
+
             }
         }
     }
@@ -281,6 +295,21 @@ public class Main {
     private static void sortByVolume(ArrayList<Bottle> bottles) {
         Collections.sort(bottles);
         System.out.println("Sort complete");
+        Utils.waitForUser();
+    }
+
+    private static int calculateTotalVolume(ArrayList<Bottle> bottles) {
+        int totalVolume = 0;
+        for (Bottle bottle : bottles) {
+            totalVolume += bottle.getVolumeML();
+        }
+        return totalVolume;
+    }
+
+    public static void displayTotalVolume(ArrayList<Bottle> bottles) {
+        int totalVolume = calculateTotalVolume(bottles);
+        System.out.println();
+        System.out.println(totalVolume);
         Utils.waitForUser();
     }
 
