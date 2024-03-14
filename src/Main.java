@@ -51,7 +51,8 @@ public class Main {
             System.out.println("0. Return");
             System.out.println("1. Filter by brand");
             System.out.println("2. Calculate total volume");
-            int menuChoice = Utils.scanBoundedInt(0, 2, "#: ");
+            System.out.println("3. Calculate average volume");
+            int menuChoice = Utils.scanBoundedInt(0, 3, "#: ");
             switch (menuChoice) {
                 case 0:
                     return;
@@ -61,6 +62,8 @@ public class Main {
                 case 2:
                     displayTotalVolume(bottles);
                     break;
+                case 3:
+                    displayAverageVolume(bottles);
 
             }
         }
@@ -160,9 +163,16 @@ public class Main {
         printFilteredBottles(filteredBottles);
         System.out.println("0. Return");
         System.out.println("1. Calculate total volume for this brand");
-        int menuChoice = Utils.scanBoundedInt(0, 1, "#: ");
-        if (menuChoice == 1) {
-            displayTotalVolume(filteredBottles);
+        System.out.println("2. Calculate average volume for this brand");
+        int menuChoice = Utils.scanBoundedInt(0, 2, "#: ");
+        switch (menuChoice) {
+            case 0:
+                return;
+            case 1:
+                displayTotalVolume(filteredBottles);
+                break;
+            case 2:
+                displayAverageVolume(filteredBottles);
         }
     }
 
@@ -313,6 +323,19 @@ public class Main {
         System.out.println();
         String volumeUnit = "ml";
         System.out.println("Total volume: " + totalVolume + volumeUnit);
+        Utils.waitForUser();
+    }
+
+    public static int calculateAverageVolume(ArrayList<Bottle> bottles) {
+        int totalVolume = calculateTotalVolume(bottles);
+        int n = bottles.size();
+        float averageVolume = (float) totalVolume / n;
+        return Math.round(averageVolume);
+    }
+    public static void displayAverageVolume(ArrayList<Bottle> bottles) {
+        int averageVolume = calculateAverageVolume(bottles);
+        System.out.println();
+        System.out.println("Average volume: " + averageVolume + "ml");
         Utils.waitForUser();
     }
 
