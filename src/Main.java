@@ -1,3 +1,4 @@
+import javax.imageio.plugins.tiff.BaselineTIFFTagSet;
 import java.io.*;
 import java.util.*;
 
@@ -185,17 +186,22 @@ public class Main {
         return brands.get(brandChoiceNumber);
     }
 
-    public static void printBottlesMatchingBrand(ArrayList<Bottle> bottles, String chosenBrandName) {
-        System.out.println(chosenBrandName + " bottles:");
-        int counter = 1;
+    public static ArrayList<Bottle> getBottlesMatchingBrand(ArrayList<Bottle> bottles, String chosenBrandName) {
+        ArrayList<Bottle> matchingBottles = new ArrayList<>();
         for (Bottle bottle : bottles) {
             String brand = bottle.getBrand();
             boolean brandMatches = brand.equals(chosenBrandName);
             if (brandMatches) {
-                System.out.printf("[%d] %s %n", counter, bottle);
-                counter++;
+                matchingBottles.add(bottle);
             }
         }
+        return matchingBottles;
+    }
+
+    public static void printBottlesMatchingBrand(ArrayList<Bottle> bottles, String chosenBrandName) {
+        System.out.println(chosenBrandName + " bottles:");
+        ArrayList<Bottle> matchingBottles = getBottlesMatchingBrand(bottles, chosenBrandName);
+        Utils.printNumberedListFrom1(matchingBottles);
     }
 
     public static void printMaterials() {
