@@ -1,10 +1,13 @@
-import java.util.ArrayList;
 import java.util.InputMismatchException;
+import java.util.List;
 import java.util.Scanner;
 
 public final class Utils {
     private Utils() {
     }
+
+    // Found conflicting information about whether or not to close a System.in Scanner
+    // Closing it caused a NoSuchElement exception so the decision was clear
 
     public static int scanInt(String prompt) {
         int num;
@@ -58,7 +61,7 @@ public final class Utils {
         }
     }
 
-    public static void printNumberedListFrom1(ArrayList<?> list) {
+    public static void printNumberedListFrom1(List<?> list) {
         for (int i = 0; i < list.size(); i++) {
             String item = list.get(i).toString();
             int displayNumber = i + 1;
