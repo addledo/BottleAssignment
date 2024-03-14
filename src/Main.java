@@ -1,5 +1,4 @@
 import java.io.*;
-import java.lang.reflect.Array;
 import java.util.*;
 
 public class Main {
@@ -41,7 +40,7 @@ public class Main {
 
     }
 
-    private static void viewCollection(ArrayList<Bottle> bottles) {
+    public static void viewCollection(ArrayList<Bottle> bottles) {
         while (true) {
             printBottles(bottles);
             System.out.println();
@@ -117,7 +116,7 @@ public class Main {
         return new Flask(brand, volumeInML, material, keepWarmHours);
     }
 
-    private static int askVolume() {
+    public static int askVolume() {
         int volumeInML;
         volumeInML = Utils.scanBoundedInt(1, 10000, "Volume (ml): ");
         return volumeInML;
@@ -133,7 +132,7 @@ public class Main {
         return Material.values()[selection];
     }
 
-    private static int askKeepWarmHours() {
+    public static int askKeepWarmHours() {
         // TODO        Is it better to separate code like below or to just return the result?
         System.out.println();
         System.out.println("Please enter the keep warm time of your flask.");
@@ -142,7 +141,7 @@ public class Main {
         return keepWarmHours;
     }
 
-    private static String askContents() {
+    public static String askContents() {
         System.out.println();
         System.out.println("What does it contain?");
         System.out.println("If empty, just press enter.");
@@ -169,7 +168,7 @@ public class Main {
         return userWantsToFilter;
     }
 
-    private static void filterBottles(ArrayList<Bottle> bottles) {
+    public static void filterBottles(ArrayList<Bottle> bottles) {
         ArrayList<String> existingBrands = getBrands(bottles);
         String chosenBrandName = chooseBrandFrom(existingBrands);
         System.out.println();
@@ -178,7 +177,7 @@ public class Main {
         Utils.waitForUser();
     }
 
-    private static ArrayList<String> getBrands(ArrayList<Bottle> bottles) {
+    public static ArrayList<String> getBrands(ArrayList<Bottle> bottles) {
         HashSet<String> brands = new HashSet<>();
         for (Bottle bottle : bottles) {
             String brand = bottle.getBrand();
@@ -187,7 +186,7 @@ public class Main {
         return new ArrayList<>(brands);
     }
 
-    private static String chooseBrandFrom(ArrayList<String> brands) {
+    public static String chooseBrandFrom(ArrayList<String> brands) {
         System.out.println("Choose a brand: ");
         Utils.printNumberedListFrom1(brands);
         int len = brands.size();
@@ -196,7 +195,7 @@ public class Main {
         return brands.get(brandChoiceNumber);
     }
 
-    private static void printBottlesMatchingBrand(ArrayList<Bottle> bottles, String chosenBrandName) {
+    public static void printBottlesMatchingBrand(ArrayList<Bottle> bottles, String chosenBrandName) {
         System.out.println(chosenBrandName + " bottles:");
         int counter = 1;
         for (Bottle bottle : bottles) {
@@ -275,7 +274,7 @@ public class Main {
         }
     }
 
-    private static void changeContentsOfABottle(ArrayList<Bottle> bottles) {
+    public static void changeContentsOfABottle(ArrayList<Bottle> bottles) {
         Optional<Bottle> optionalBottle = chooseBottleFrom(bottles);
         if (optionalBottle.isEmpty()) {
             return;
@@ -285,20 +284,20 @@ public class Main {
         bottle.setContents(contents);
     }
 
-    private static void sortByBrand(ArrayList<Bottle> bottles) {
+    public static void sortByBrand(ArrayList<Bottle> bottles) {
         BottleBrandComparator brandComparator = new BottleBrandComparator();
         bottles.sort(brandComparator);
         System.out.println("Sort complete");
         Utils.waitForUser();
     }
 
-    private static void sortByVolume(ArrayList<Bottle> bottles) {
+    public static void sortByVolume(ArrayList<Bottle> bottles) {
         Collections.sort(bottles);
         System.out.println("Sort complete");
         Utils.waitForUser();
     }
 
-    private static int calculateTotalVolume(ArrayList<Bottle> bottles) {
+    public static int calculateTotalVolume(ArrayList<Bottle> bottles) {
         int totalVolume = 0;
         for (Bottle bottle : bottles) {
             totalVolume += bottle.getVolumeML();
@@ -313,7 +312,7 @@ public class Main {
         Utils.waitForUser();
     }
 
-    private static Optional<Bottle> chooseBottleFrom(ArrayList<Bottle> bottles) {
+    public static Optional<Bottle> chooseBottleFrom(ArrayList<Bottle> bottles) {
         printBottles(bottles);
         int max = bottles.size();
         System.out.println("[0] Return");
