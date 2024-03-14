@@ -158,16 +158,6 @@ public class Main {
         }
     }
 
-    public static boolean userWantsToFilter() {
-        boolean userWantsToFilter = false;
-        Scanner scanner = new Scanner(System.in);
-        String input = scanner.nextLine().trim();
-        if (input.equals("1")) {
-            userWantsToFilter = true;
-        }
-        return userWantsToFilter;
-    }
-
     public static void filterBottles(ArrayList<Bottle> bottles) {
         ArrayList<String> existingBrands = getBrands(bottles);
         String chosenBrandName = chooseBrandFrom(existingBrands);
