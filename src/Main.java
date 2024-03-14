@@ -56,7 +56,7 @@ public class Main {
                 case 0:
                     return;
                 case 1:
-                    filterBottles(bottles);
+                    filterBottlesMenu(bottles);
                     break;
                 case 2:
                     displayTotalVolume(bottles);
@@ -155,20 +155,24 @@ public class Main {
         }
     }
 
-    public static void filterBottles(ArrayList<Bottle> bottles) {
-        ArrayList<String> existingBrands = getBrands(bottles);
-        String chosenBrandName = chooseBrandFrom(existingBrands);
-        ArrayList<Bottle> matchingBottles = getBottlesMatchingBrand(bottles, chosenBrandName);
+    public static void filterBottlesMenu(ArrayList<Bottle> bottles) {
+        ArrayList<Bottle> filteredBottles = filterBottles(bottles);
         System.out.println();
-        System.out.println(chosenBrandName + " bottles:");
-        Utils.printNumberedListFrom1(matchingBottles);
+        System.out.println(filteredBottles.getFirst().getBrand() + " bottles:");
+        Utils.printNumberedListFrom1(filteredBottles);
         System.out.println();
         System.out.println("0. Return");
         System.out.println("1. Calculate total volume for this brand");
         int menuChoice = Utils.scanBoundedInt(0, 1, "#: ");
         if (menuChoice == 1) {
-            displayTotalVolume(matchingBottles);
+            displayTotalVolume(filteredBottles);
         }
+    }
+
+    public static ArrayList<Bottle> filterBottles(ArrayList<Bottle> bottles) {
+        ArrayList<String> existingBrands = getBrands(bottles);
+        String chosenBrandName = chooseBrandFrom(existingBrands);
+        return getBottlesMatchingBrand(bottles, chosenBrandName);
     }
 
     public static ArrayList<String> getBrands(ArrayList<Bottle> bottles) {
