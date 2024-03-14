@@ -158,10 +158,17 @@ public class Main {
     public static void filterBottles(ArrayList<Bottle> bottles) {
         ArrayList<String> existingBrands = getBrands(bottles);
         String chosenBrandName = chooseBrandFrom(existingBrands);
+        ArrayList<Bottle> matchingBottles = getBottlesMatchingBrand(bottles, chosenBrandName);
         System.out.println();
-        printBottlesMatchingBrand(bottles, chosenBrandName);
+        System.out.println(chosenBrandName + " bottles:");
+        Utils.printNumberedListFrom1(matchingBottles);
         System.out.println();
-        Utils.waitForUser();
+        System.out.println("0. Return");
+        System.out.println("1. Calculate total volume for this brand");
+        int menuChoice = Utils.scanBoundedInt(0, 1, "#: ");
+        if (menuChoice == 1) {
+            displayTotalVolume(matchingBottles);
+        }
     }
 
     public static ArrayList<String> getBrands(ArrayList<Bottle> bottles) {
