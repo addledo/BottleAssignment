@@ -43,7 +43,7 @@ public class Main {
     public static void viewCollection(ArrayList<Bottle> bottles) {
         while (true) {
             printBottles(bottles);
-            System.out.println();
+//            System.out.println();
             if (bottles.isEmpty()) {
                 Utils.waitForUser();
                 return;
@@ -57,10 +57,10 @@ public class Main {
                     filterBottlesMenu(bottles);
                     break;
                 case 2:
-                    displayTotalVolume(bottles);
+                    displayTotalVolume(bottles, false);
                     break;
                 case 3:
-                    displayAverageVolume(bottles);
+                    displayAverageVolume(bottles, false);
 
             }
         }
@@ -78,6 +78,7 @@ public class Main {
     }
 
     private static void printViewMenu() {
+        System.out.println();
         System.out.println("0. Return");
         System.out.println("1. Filter by brand");
         System.out.println("2. Calculate total volume");
@@ -162,20 +163,22 @@ public class Main {
     }
 
     public static void filterBottlesMenu(ArrayList<Bottle> bottles) {
-        ArrayList<Bottle> filteredBottles = filterBottles(bottles);
-        printFilteredBottles(filteredBottles);
-        System.out.println("0. Return");
-        System.out.println("1. Calculate total volume for this brand");
-        System.out.println("2. Calculate average volume for this brand");
-        int menuChoice = Utils.scanBoundedInt(0, 2, "#: ");
-        switch (menuChoice) {
-            case 0:
-                return;
-            case 1:
-                displayTotalVolume(filteredBottles);
-                break;
-            case 2:
-                displayAverageVolume(filteredBottles);
+        ArrayList<Bottle> filteredBottlesList = filterByBrand(bottles);
+        while (true) {
+            printFilteredBottles(filteredBottlesList);
+            System.out.println("0. Return");
+            System.out.println("1. Calculate total volume for this brand");
+            System.out.println("2. Calculate average volume for this brand");
+            int menuChoice = Utils.scanBoundedInt(0, 2, "#: ");
+            switch (menuChoice) {
+                case 0:
+                    return;
+                case 1:
+                    displayTotalVolume(filteredBottlesList, true);
+                    break;
+                case 2:
+                    displayAverageVolume(filteredBottlesList, true);
+            }
         }
     }
 
@@ -186,7 +189,7 @@ public class Main {
         System.out.println();
     }
 
-    public static ArrayList<Bottle> filterBottles(ArrayList<Bottle> bottles) {
+    public static ArrayList<Bottle> filterByBrand(ArrayList<Bottle> bottles) {
         ArrayList<String> existingBrands = getBrands(bottles);
         String chosenBrandName = chooseBrandFrom(existingBrands);
         return getBottlesMatchingBrand(bottles, chosenBrandName);
@@ -204,6 +207,7 @@ public class Main {
     }
 
     public static String chooseBrandFrom(ArrayList<String> brands) {
+        System.out.println();
         System.out.println("Choose a brand: ");
         Utils.printNumberedListFrom1(brands);
         int len = brands.size();
@@ -321,11 +325,12 @@ public class Main {
         return totalVolume;
     }
 
-    public static void displayTotalVolume(ArrayList<Bottle> bottles) {
+    public static void displayTotalVolume(ArrayList<Bottle> bottles, boolean isBrand) {
         int totalVolume = calculateTotalVolume(bottles);
         System.out.println();
         String volumeUnit = "ml";
-        System.out.println("Total volume: " + totalVolume + volumeUnit);
+        String brand = isBrand ? " for " + bottles.getFirst().getBrand() : "";
+        System.out.printf("Total volume%s: %d%s", brand, totalVolume, volumeUnit);
         Utils.waitForUser();
     }
 
@@ -336,17 +341,20 @@ public class Main {
         return Math.round(averageVolume);
     }
 
-    public static void displayAverageVolume(ArrayList<Bottle> bottles) {
-        int averageVolume = calculateAverageVolume(bottles);
+    public static void displayAverageVolume(ArrayList<Bottle> bottles, boolean isBrand) {
         System.out.println();
-        System.out.println("Average volume: " + averageVolume + "ml");
+        int averageVolume = calculateAverageVolume(bottles);
+        String volumeUnit = "ml";
+        String brand = isBrand ? " for " + bottles.getFirst().getBrand() : "";
+        System.out.printf("Average volume%s: %d%s", brand, averageVolume, volumeUnit);
         Utils.waitForUser();
     }
 
     public static Optional<Bottle> chooseBottleFrom(ArrayList<Bottle> bottles) {
         printBottles(bottles);
         int max = bottles.size();
-        System.out.println("[0] Return");
+        System.out.println();
+        System.out.println("Enter 0 to cancel");
         int bottleNumber = Utils.scanBoundedInt(0, max, "Enter the number of the bottle: ");
         if (bottleNumber == 0) {
             return Optional.empty();

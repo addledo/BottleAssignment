@@ -38,6 +38,7 @@ public final class Utils {
     }
 
     public static void waitForUser() {
+        System.out.println();
         System.out.println("Press enter to return");
         Scanner scanner = new Scanner(System.in);
         scanner.nextLine();
