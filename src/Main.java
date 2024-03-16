@@ -62,7 +62,7 @@ public class Main {
                     sortByBrand(bottles);
                     break;
                 case 4:
-                    filterBottlesMenu(bottles);
+                    filterBottles(bottles);
                     break;
                 case 5:
                     displayTotalVolume(bottles, false);
@@ -220,8 +220,8 @@ public class Main {
         }
     }
 
-    public static void filterBottlesMenu(ArrayList<Bottle> bottles) {
-        ArrayList<Bottle> filteredBottles = filterByBrand(bottles);
+    public static void filterBottles(ArrayList<Bottle> bottles) {
+        ArrayList<Bottle> filteredBottles = getFilteredList(bottles);
         while (true) {
             printFilteredBottles(filteredBottles);
             System.out.println("0. Return");
@@ -248,7 +248,7 @@ public class Main {
         System.out.println();
     }
 
-    public static ArrayList<Bottle> filterByBrand(ArrayList<Bottle> bottles) {
+    public static ArrayList<Bottle> getFilteredList(ArrayList<Bottle> bottles) {
         ArrayList<String> existingBrands = getBrands(bottles);
         String chosenBrandName = chooseBrandFrom(existingBrands);
         return getBottlesMatchingBrand(bottles, chosenBrandName);
