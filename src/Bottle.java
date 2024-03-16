@@ -4,20 +4,20 @@ public class Bottle implements Serializable, Comparable<Bottle> {
 
 
     private final String brand;
-    private final int volumeML;
+    private final int volumeInML;
     private final Material material;
 
     private String contents = "EMPTY";
 
-    public Bottle(String brand, int volumeML, Material material) {
+    public Bottle(String brand, int volumeInML, Material material) {
         this.brand = brand;
-        this.volumeML = volumeML;
+        this.volumeInML = volumeInML;
         this.material = material;
     }
 
-    public Bottle(String brand, int volumeML, Material material, String contents) {
+    public Bottle(String brand, int volumeInML, Material material, String contents) {
         this.brand = brand;
-        this.volumeML = volumeML;
+        this.volumeInML = volumeInML;
         this.material = material;
         setContents(contents);
     }
@@ -31,8 +31,8 @@ public class Bottle implements Serializable, Comparable<Bottle> {
         return material;
     }
 
-    public int getVolumeML() {
-        return volumeML;
+    public int getVolumeInML() {
+        return volumeInML;
     }
 
     public String getContents() {
@@ -52,7 +52,7 @@ public class Bottle implements Serializable, Comparable<Bottle> {
         //Padding strings to align columns
         type = String.format("%-7s", type);
         String brand = String.format("%-20s", this.brand);
-        String volume = String.format("%-8s", volumeML+"ml");
+        String volume = String.format("%-8s", volumeInML +"ml");
         String materialName = String.format("%-8s", material.displayName);
         String contents = this.contents;
         if (contents.length() > 17) {
@@ -62,6 +62,6 @@ public class Bottle implements Serializable, Comparable<Bottle> {
     }
 
     public int compareTo(Bottle o) {
-        return volumeML - o.volumeML;
+        return volumeInML - o.volumeInML;
     }
 }

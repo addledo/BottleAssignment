@@ -26,6 +26,7 @@ public final class Utils {
     }
 
     public static int scanBoundedInt(int min, int max, String prompt) {
+        //Scans int in range min-max inclusive
         int num;
         while (true) {
             num = scanInt(prompt);

@@ -48,10 +48,7 @@ public class Main {
                 Utils.waitForUser();
                 return;
             }
-            System.out.println("0. Return");
-            System.out.println("1. Filter by brand");
-            System.out.println("2. Calculate total volume");
-            System.out.println("3. Calculate average volume");
+            printViewMenu();
             int menuChoice = Utils.scanBoundedInt(0, 3, "#: ");
             switch (menuChoice) {
                 case 0:
@@ -69,7 +66,6 @@ public class Main {
         }
     }
 
-
     public static void printMainMenu() {
         System.out.println();
         System.out.println("-- MENU --");
@@ -79,6 +75,13 @@ public class Main {
         System.out.println("4. Modify bottles");
         System.out.println("5. Remove bottles");
         System.out.println("6. Exit");
+    }
+
+    private static void printViewMenu() {
+        System.out.println("0. Return");
+        System.out.println("1. Filter by brand");
+        System.out.println("2. Calculate total volume");
+        System.out.println("3. Calculate average volume");
     }
 
     public static void printModifyMenu() {
@@ -262,7 +265,7 @@ public class Main {
         Iterator<Bottle> bottleIterator = bottles.iterator();
         while (bottleIterator.hasNext()) {
             Bottle bottle = bottleIterator.next();
-            int volume = bottle.getVolumeML();
+            int volume = bottle.getVolumeInML();
             if (upperBound < volume || volume < lowerBound) {
                 bottleIterator.remove();
             }
@@ -313,7 +316,7 @@ public class Main {
     public static int calculateTotalVolume(ArrayList<Bottle> bottles) {
         int totalVolume = 0;
         for (Bottle bottle : bottles) {
-            totalVolume += bottle.getVolumeML();
+            totalVolume += bottle.getVolumeInML();
         }
         return totalVolume;
     }
@@ -332,6 +335,7 @@ public class Main {
         float averageVolume = (float) totalVolume / n;
         return Math.round(averageVolume);
     }
+
     public static void displayAverageVolume(ArrayList<Bottle> bottles) {
         int averageVolume = calculateAverageVolume(bottles);
         System.out.println();

@@ -42,10 +42,10 @@ class BottleTest {
 
     @Test
     void getVolumeML() {
-        assertEquals(500, testBottles.get(0).getVolumeML());
-        assertEquals(1, testBottles.get(1).getVolumeML());
-        assertEquals(10000, testBottles.get(2).getVolumeML());
-        assertEquals(0, testBottles.get(3).getVolumeML());
+        assertEquals(500, testBottles.get(0).getVolumeInML());
+        assertEquals(1, testBottles.get(1).getVolumeInML());
+        assertEquals(10000, testBottles.get(2).getVolumeInML());
+        assertEquals(0, testBottles.get(3).getVolumeInML());
     }
 
     @Test
@@ -67,9 +67,9 @@ class BottleTest {
     @Test
     void compareTo() {
         Collections.sort(testBottles);
-        assertEquals(0, testBottles.get(0).getVolumeML());
-        assertEquals(1, testBottles.get(1).getVolumeML());
-        assertEquals(500, testBottles.get(2).getVolumeML());
-        assertEquals(10000, testBottles.get(3).getVolumeML());
+        assertEquals(0, testBottles.get(0).getVolumeInML());
+        assertEquals(1, testBottles.get(1).getVolumeInML());
+        assertEquals(500, testBottles.get(2).getVolumeInML());
+        assertEquals(10000, testBottles.get(3).getVolumeInML());
     }
 }
