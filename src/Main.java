@@ -6,7 +6,6 @@ public class Main {
     public static void main(String[] args) {
         String saveLocation = "bottles.dat";
         ArrayList<Bottle> bottles = loadBottles(saveLocation);
-
         while (true) {
             printMainMenu();
             int menuChoice = Utils.scanBoundedInt(1, 6, "#: ");
@@ -47,8 +46,15 @@ public class Main {
                 Utils.waitForUser();
                 return;
             }
+            System.out.println();
+            System.out.println("0. Return");
+            System.out.println("1. Show more options");
+            int firstChoice = Utils.scanBoundedInt(0, 1, "#: ");
+            if (firstChoice == 0) {
+                return;
+            }
             printViewMenu();
-            int menuChoice = Utils.scanBoundedInt(0, 4, "#: ");
+            int menuChoice = Utils.scanBoundedInt(0, 6, "#: ");
             switch (menuChoice) {
                 case 0:
                     return;
@@ -56,16 +62,39 @@ public class Main {
                     viewFlasks(bottles);
                     break;
                 case 2:
-                    filterBottlesMenu(bottles);
+                    //Sort by volume
+                    Collections.sort(bottles);
                     break;
                 case 3:
-                    displayTotalVolume(bottles, false);
+                    //Sort by brand
+                    sortByBrand(bottles);
                     break;
                 case 4:
+                    filterBottlesMenu(bottles);
+                    break;
+                case 5:
+                    displayTotalVolume(bottles, false);
+                    break;
+                case 6:
                     displayAverageVolume(bottles, false);
 
             }
         }
+    }
+
+    private static void printViewMenu() {
+        System.out.println();
+        System.out.println("0. Return");
+        System.out.println("1. View flasks only");
+        System.out.println("2. Sort by volume");
+        System.out.println("3. Sort by brand");
+        System.out.println("4. Filter by brand");
+        System.out.println("5. Calculate total volume");
+        System.out.println("6. Calculate average volume");
+    }
+
+    private static void printAdditionViewMenuOptions() {
+
     }
 
     public static void viewFlasks(ArrayList<Bottle> bottles) {
@@ -108,15 +137,6 @@ public class Main {
 
     private static void sortFlasksByWarmTime(ArrayList<Flask> flasks) {
         flasks.sort((Flask o1, Flask o2) -> o1.getKeepWarmHours() - o2.getKeepWarmHours());
-    }
-
-    private static void printViewMenu() {
-        System.out.println();
-        System.out.println("0. Return");
-        System.out.println("1. View flasks only");
-        System.out.println("2. Filter by brand");
-        System.out.println("3. Calculate total volume");
-        System.out.println("4. Calculate average volume");
     }
 
     public static void printMainMenu() {
@@ -354,8 +374,6 @@ public class Main {
     public static void sortByBrand(ArrayList<Bottle> bottles) {
         BottleBrandComparator brandComparator = new BottleBrandComparator();
         bottles.sort(brandComparator);
-        System.out.println("Sort complete");
-        Utils.waitForUser();
     }
 
     public static void sortByVolume(ArrayList<Bottle> bottles) {
