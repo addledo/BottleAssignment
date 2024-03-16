@@ -11,23 +11,18 @@ public class Main {
             int menuChoice = Utils.scanBoundedInt(1, 6, "#: ");
             switch (menuChoice) {
                 case 1:
-                    //View collection
                     viewCollection(bottles);
                     break;
                 case 2:
-                    //Add bottle
                     bottles.add(createBottle());
                     break;
                 case 3:
-                    //Add flask
                     bottles.add(createFlask());
                     break;
                 case 4:
-                    //Modify bottles
-                    modifyBottles(bottles);
+                    changeContentsOfABottle(bottles);
                     break;
                 case 5:
-                    //Remove bottles
                     removeBottles(bottles);
                     break;
                 case 6:
@@ -46,9 +41,7 @@ public class Main {
                 Utils.waitForUser();
                 return;
             }
-            System.out.println();
-            System.out.println("0. Return");
-            System.out.println("1. Show more options");
+            printPreViewMenu();
             int firstChoice = Utils.scanBoundedInt(0, 1, "#: ");
             if (firstChoice == 0) {
                 return;
@@ -60,13 +53,12 @@ public class Main {
                     return;
                 case 1:
                     viewFlasks(bottles);
-                    break;
+                    return;
                 case 2:
                     //Sort by volume
                     Collections.sort(bottles);
                     break;
                 case 3:
-                    //Sort by brand
                     sortByBrand(bottles);
                     break;
                 case 4:
@@ -82,6 +74,12 @@ public class Main {
         }
     }
 
+    private static void printPreViewMenu() {
+        System.out.println();
+        System.out.println("0. Return");
+        System.out.println("1. Show more options");
+    }
+
     private static void printViewMenu() {
         System.out.println();
         System.out.println("0. Return");
@@ -91,10 +89,6 @@ public class Main {
         System.out.println("4. Filter by brand");
         System.out.println("5. Calculate total volume");
         System.out.println("6. Calculate average volume");
-    }
-
-    private static void printAdditionViewMenuOptions() {
-
     }
 
     public static void viewFlasks(ArrayList<Bottle> bottles) {
@@ -145,19 +139,11 @@ public class Main {
         System.out.println("1. View bottles");
         System.out.println("2. Add a bottle");
         System.out.println("3. Add a flask");
-        System.out.println("4. Modify bottles");
+        System.out.println("4. Modify contents");
         System.out.println("5. Remove bottles");
         System.out.println("6. Exit");
     }
 
-    public static void printModifyMenu() {
-        System.out.println();
-        System.out.println("-- MODIFY MENU --");
-        System.out.println("0. Return");
-        System.out.println("1. Change the contents of a bottle");
-        System.out.println("2. Sort bottles by brand");
-        System.out.println("3. Sort bottles by volume");
-    }
 
     public static void printRemoveMenu() {
         System.out.println();
@@ -343,24 +329,6 @@ public class Main {
         }
     }
 
-    public static void modifyBottles(ArrayList<Bottle> bottles) {
-        printModifyMenu();
-        int menuChoice = Utils.scanBoundedInt(0, 3, "#: ");
-        System.out.println();
-        switch (menuChoice) {
-            case 0:
-                return;
-            case 1:
-                changeContentsOfABottle(bottles);
-                return;
-            case 2:
-                sortByBrand(bottles);
-                return;
-            case 3:
-                sortByVolume(bottles);
-        }
-    }
-
     public static void changeContentsOfABottle(ArrayList<Bottle> bottles) {
         Optional<Bottle> optionalBottle = chooseBottleFrom(bottles);
         if (optionalBottle.isEmpty()) {
@@ -374,12 +342,6 @@ public class Main {
     public static void sortByBrand(ArrayList<Bottle> bottles) {
         BottleBrandComparator brandComparator = new BottleBrandComparator();
         bottles.sort(brandComparator);
-    }
-
-    public static void sortByVolume(ArrayList<Bottle> bottles) {
-        Collections.sort(bottles);
-        System.out.println("Sort complete");
-        Utils.waitForUser();
     }
 
     public static int calculateTotalVolume(ArrayList<Bottle> bottles) {
