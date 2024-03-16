@@ -43,7 +43,6 @@ public class Main {
     public static void viewCollection(ArrayList<Bottle> bottles) {
         while (true) {
             printBottles(bottles);
-//            System.out.println();
             if (bottles.isEmpty()) {
                 Utils.waitForUser();
                 return;
@@ -163,9 +162,9 @@ public class Main {
     }
 
     public static void filterBottlesMenu(ArrayList<Bottle> bottles) {
-        ArrayList<Bottle> filteredBottlesList = filterByBrand(bottles);
+        ArrayList<Bottle> filteredBottles = filterByBrand(bottles);
         while (true) {
-            printFilteredBottles(filteredBottlesList);
+            printFilteredBottles(filteredBottles);
             System.out.println("0. Return");
             System.out.println("1. Calculate total volume for this brand");
             System.out.println("2. Calculate average volume for this brand");
@@ -174,17 +173,18 @@ public class Main {
                 case 0:
                     return;
                 case 1:
-                    displayTotalVolume(filteredBottlesList, true);
+                    displayTotalVolume(filteredBottles, true);
                     break;
                 case 2:
-                    displayAverageVolume(filteredBottlesList, true);
+                    displayAverageVolume(filteredBottles, true);
             }
         }
     }
 
     public static void printFilteredBottles(ArrayList<Bottle> filteredBottles) {
         System.out.println();
-        System.out.println(filteredBottles.getFirst().getBrand() + " bottles:");
+        String brand = filteredBottles.getFirst().getBrand();
+        System.out.println(brand + " bottles:");
         Utils.printNumberedListFrom1(filteredBottles);
         System.out.println();
     }
@@ -210,9 +210,9 @@ public class Main {
         System.out.println();
         System.out.println("Choose a brand: ");
         Utils.printNumberedListFrom1(brands);
-        int len = brands.size();
-        int brandChoiceNumber = Utils.scanBoundedInt(1, len, "#: ");
-        brandChoiceNumber--;     //Adjusts numbers as printed list starts from 1
+        int numOfBrands = brands.size();
+        int brandChoiceNumber = Utils.scanBoundedInt(1, numOfBrands, "#: ");
+        brandChoiceNumber--;     //Because printed list starts at 1
         return brands.get(brandChoiceNumber);
     }
 
@@ -264,8 +264,9 @@ public class Main {
     }
 
     public static void deleteByVolume(ArrayList<Bottle> bottles) {
-        int lowerBound = Utils.scanInt("Lower bound: ");
-        int upperBound = Utils.scanInt("Upper bound: ");
+        //Deletes bottles NOT in range
+        int lowerBound = Utils.scanBoundedInt(0, 10000, "Lower bound: ");
+        int upperBound = Utils.scanBoundedInt(lowerBound, 10000, "Upper bound: ");
         Iterator<Bottle> bottleIterator = bottles.iterator();
         while (bottleIterator.hasNext()) {
             Bottle bottle = bottleIterator.next();
@@ -300,8 +301,8 @@ public class Main {
             return;
         }
         Bottle bottle = optionalBottle.get();
-        String contents = askContents();
-        bottle.setContents(contents);
+        String newContents = askContents();
+        bottle.setContents(newContents);
     }
 
     public static void sortByBrand(ArrayList<Bottle> bottles) {
@@ -352,10 +353,10 @@ public class Main {
 
     public static Optional<Bottle> chooseBottleFrom(ArrayList<Bottle> bottles) {
         printBottles(bottles);
-        int max = bottles.size();
         System.out.println();
         System.out.println("Enter 0 to cancel");
-        int bottleNumber = Utils.scanBoundedInt(0, max, "Enter the number of the bottle: ");
+        int numOfBottles = bottles.size();
+        int bottleNumber = Utils.scanBoundedInt(0, numOfBottles, "Enter the number of the bottle: ");
         if (bottleNumber == 0) {
             return Optional.empty();
         }

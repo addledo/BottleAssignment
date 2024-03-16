@@ -22,6 +22,13 @@ public class Bottle implements Serializable, Comparable<Bottle> {
         setContents(contents);
     }
 
+    public void setContents(String contents) {
+        if (contents.isBlank()) {
+            this.contents = "EMPTY";
+        } else {
+            this.contents = contents;
+        }
+    }
 
     public String getBrand() {
         return brand;
@@ -39,17 +46,9 @@ public class Bottle implements Serializable, Comparable<Bottle> {
         return contents;
     }
 
-    public void setContents(String contents) {
-        if (contents.isBlank()) {
-            this.contents = "EMPTY";
-        } else {
-            this.contents = contents;
-        }
-    }
-
     public String toString() {
         String type = this.getClass().getName();
-        //Padding strings to align columns
+        //Padding strings to align columns:
         type = String.format("%-7s", type);
         String brand = String.format("%-20s", this.brand);
         String volume = String.format("%-8s", volumeInML +"ml");
