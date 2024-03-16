@@ -41,12 +41,12 @@ public class Main {
                 Utils.waitForUser();
                 return;
             }
-            printPreViewMenu();
+            printViewMenuMiniOptions();
             int firstChoice = Utils.scanBoundedInt(0, 1, "#: ");
             if (firstChoice == 0) {
                 return;
             }
-            printViewMenu();
+            printViewMenuFullOptions();
             int menuChoice = Utils.scanBoundedInt(0, 6, "#: ");
             switch (menuChoice) {
                 case 0:
@@ -69,18 +69,17 @@ public class Main {
                     break;
                 case 6:
                     displayAverageVolume(bottles, false);
-
             }
         }
     }
 
-    private static void printPreViewMenu() {
+    private static void printViewMenuMiniOptions() {
         System.out.println();
         System.out.println("0. Return");
         System.out.println("1. Show more options");
     }
 
-    private static void printViewMenu() {
+    private static void printViewMenuFullOptions() {
         System.out.println();
         System.out.println("0. Return");
         System.out.println("1. View flasks only");
@@ -93,18 +92,9 @@ public class Main {
 
     public static void viewFlasks(ArrayList<Bottle> bottles) {
         ArrayList<Flask> flasks = getFlasks(bottles);
-        if (flasks.isEmpty()) {
-            System.out.println();
-            System.out.println("No flasks found");
-        }
         while (true) {
-            System.out.println();
-            System.out.println("Flasks: ");
-            Utils.printNumberedListFrom1(flasks);
-            System.out.println();
-            System.out.println("0. Return");
-            System.out.println("1. Sort by volume");
-            System.out.println("2. Sort by keep warm time");
+            printFlasks(flasks);
+            printFlaskMenuOptions();
             int menuChoice = Utils.scanBoundedInt(0, 2, "#: ");
             switch (menuChoice) {
                 case 0:
@@ -117,6 +107,23 @@ public class Main {
                     break;
             }
         }
+    }
+
+    private static void printFlaskMenuOptions() {
+        System.out.println();
+        System.out.println("0. Return");
+        System.out.println("1. Sort by volume");
+        System.out.println("2. Sort by keep warm time");
+    }
+
+    public static void printFlasks(ArrayList<Flask> flasks) {
+        System.out.println();
+        if (flasks.isEmpty()) {
+            System.out.println("No flasks found");
+            return;
+        }
+        System.out.println("Flasks: ");
+        Utils.printNumberedListFrom1(flasks);
     }
 
     private static ArrayList<Flask> getFlasks(ArrayList<Bottle> bottles) {
