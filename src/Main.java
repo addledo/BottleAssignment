@@ -48,21 +48,75 @@ public class Main {
                 return;
             }
             printViewMenu();
-            int menuChoice = Utils.scanBoundedInt(0, 3, "#: ");
+            int menuChoice = Utils.scanBoundedInt(0, 4, "#: ");
             switch (menuChoice) {
                 case 0:
                     return;
                 case 1:
-                    filterBottlesMenu(bottles);
+                    viewFlasks(bottles);
                     break;
                 case 2:
-                    displayTotalVolume(bottles, false);
+                    filterBottlesMenu(bottles);
                     break;
                 case 3:
+                    displayTotalVolume(bottles, false);
+                    break;
+                case 4:
                     displayAverageVolume(bottles, false);
 
             }
         }
+    }
+
+    public static void viewFlasks(ArrayList<Bottle> bottles) {
+        ArrayList<Flask> flasks = getFlasks(bottles);
+        if (flasks.isEmpty()) {
+            System.out.println();
+            System.out.println("No flasks found");
+        }
+        while (true) {
+            System.out.println();
+            System.out.println("Flasks: ");
+            Utils.printNumberedListFrom1(flasks);
+            System.out.println();
+            System.out.println("0. Return");
+            System.out.println("1. Sort by volume");
+            System.out.println("2. Sort by keep warm time");
+            int menuChoice = Utils.scanBoundedInt(0, 2, "#: ");
+            switch (menuChoice) {
+                case 0:
+                    return;
+                case 1:
+                    Collections.sort(flasks);
+                    break;
+                case 2:
+                    sortFlasksByWarmTime(flasks);
+                    break;
+            }
+        }
+    }
+
+    private static ArrayList<Flask> getFlasks(ArrayList<Bottle> bottles) {
+        ArrayList<Flask> flasks = new ArrayList<>();
+        for (Bottle bottle : bottles) {
+            if (bottle instanceof Flask) {
+                flasks.add((Flask) bottle);
+            }
+        }
+        return flasks;
+    }
+
+    private static void sortFlasksByWarmTime(ArrayList<Flask> flasks) {
+        flasks.sort((Flask o1, Flask o2) -> o1.getKeepWarmHours() - o2.getKeepWarmHours());
+    }
+
+    private static void printViewMenu() {
+        System.out.println();
+        System.out.println("0. Return");
+        System.out.println("1. View flasks only");
+        System.out.println("2. Filter by brand");
+        System.out.println("3. Calculate total volume");
+        System.out.println("4. Calculate average volume");
     }
 
     public static void printMainMenu() {
@@ -74,14 +128,6 @@ public class Main {
         System.out.println("4. Modify bottles");
         System.out.println("5. Remove bottles");
         System.out.println("6. Exit");
-    }
-
-    private static void printViewMenu() {
-        System.out.println();
-        System.out.println("0. Return");
-        System.out.println("1. Filter by brand");
-        System.out.println("2. Calculate total volume");
-        System.out.println("3. Calculate average volume");
     }
 
     public static void printModifyMenu() {
