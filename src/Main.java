@@ -2,10 +2,10 @@ import java.io.*;
 import java.util.*;
 
 public class Main {
+    private static final String SAVE_LOCATION = "bottles.dat";   //TODO Where to put this?
 
     public static void main(String[] args) {
-        String saveLocation = "bottles.dat";
-        ArrayList<Bottle> bottles = loadBottles(saveLocation);
+        ArrayList<Bottle> bottles = loadBottles(SAVE_LOCATION);
         while (true) {
             printMainMenu();
             int menuChoice = Utils.scanBoundedInt(1, 6, "#: ");
@@ -14,10 +14,10 @@ public class Main {
                     viewCollection(bottles);
                     break;
                 case 2:
-                    bottles.add(createBottle());
+                    bottles.add(newBottle());
                     break;
                 case 3:
-                    bottles.add(createFlask());
+                    bottles.add(newFlask());
                     break;
                 case 4:
                     changeContentsOfABottle(bottles);
@@ -27,14 +27,25 @@ public class Main {
                     break;
                 case 6:
                     //Exit
-                    saveBottles(bottles, saveLocation);
+                    saveBottles(bottles, SAVE_LOCATION);
                     return;
             }
         }
 
     }
 
-    public static void viewCollection(ArrayList<Bottle> bottles) {
+    public static void printMainMenu() {
+        System.out.println();
+        System.out.println("-- MENU --");
+        System.out.println("1. View bottles");
+        System.out.println("2. Add a bottle");
+        System.out.println("3. Add a flask");
+        System.out.println("4. Modify contents");
+        System.out.println("5. Remove bottles");
+        System.out.println("6. Exit");
+    }
+
+    public static void viewCollection(ArrayList<Bottle> bottles) {    //TODO Is this method size ok?
         while (true) {
             printBottles(bottles);
             if (bottles.isEmpty()) {
@@ -69,6 +80,7 @@ public class Main {
                     break;
                 case 6:
                     displayAverageVolume(bottles, false);
+                    break;
             }
         }
     }
@@ -105,6 +117,9 @@ public class Main {
                 case 2:
                     sortFlasksByWarmTime(flasks);
                     break;
+
+                    // TODO    Should I add a default clause?
+                    // TODO    What should it do? Print message / throw exception?
             }
         }
     }
@@ -140,30 +155,10 @@ public class Main {
         flasks.sort((Flask o1, Flask o2) -> o1.getKeepWarmHours() - o2.getKeepWarmHours());
     }
 
-    public static void printMainMenu() {
-        System.out.println();
-        System.out.println("-- MENU --");
-        System.out.println("1. View bottles");
-        System.out.println("2. Add a bottle");
-        System.out.println("3. Add a flask");
-        System.out.println("4. Modify contents");
-        System.out.println("5. Remove bottles");
-        System.out.println("6. Exit");
-    }
-
-
-    public static void printRemoveMenu() {
-        System.out.println();
-        System.out.println("-- REMOVE MENU --");
-        System.out.println("0. Return");
-        System.out.println("1. Delete a single bottle");
-        System.out.println("2. Delete bottles not in volume range");
-    }
-
-
-    public static Bottle createBottle() {
+    public static Bottle newBottle() {
         System.out.println();
         System.out.println("Please enter the details of the bottle you'd like to add.");
+        // TODO   Should I extract this method if it's used twice:
         String brand = Utils.scanBoundedString("Brand: ", 20, false);
         int volumeInML = askVolume();
         System.out.println();
@@ -171,7 +166,7 @@ public class Main {
         return new Bottle(brand, volumeInML, material);
     }
 
-    public static Flask createFlask() {
+    public static Flask newFlask() {
         System.out.println();
         System.out.println("Please enter the details of the flask you'd like to add.");
         String brand = Utils.scanBoundedString("Brand: ", 20, false);
@@ -182,6 +177,7 @@ public class Main {
     }
 
     public static int askVolume() {
+        // TODO    Layout like this or single return statement?
         int volumeInML;
         volumeInML = Utils.scanBoundedInt(1, 10000, "Volume (ml): ");
         return volumeInML;
@@ -224,6 +220,7 @@ public class Main {
         ArrayList<Bottle> filteredBottles = getFilteredList(bottles);
         while (true) {
             printFilteredBottles(filteredBottles);
+            // TODO Should I extract this? :
             System.out.println("0. Return");
             System.out.println("1. Calculate total volume for this brand");
             System.out.println("2. Calculate average volume for this brand");
@@ -236,6 +233,7 @@ public class Main {
                     break;
                 case 2:
                     displayAverageVolume(filteredBottles, true);
+                    break;
             }
         }
     }
@@ -295,6 +293,12 @@ public class Main {
     }
 
     public static void removeBottles(ArrayList<Bottle> bottles) {
+        if (bottles.isEmpty()) {
+            System.out.println();
+            System.out.print("There are no bottles to remove.");
+            Utils.waitForUser();
+            return;
+        }
         printRemoveMenu();
         int menuChoice = Utils.scanBoundedInt(0, 2, "#: ");
         switch (menuChoice) {
@@ -308,12 +312,17 @@ public class Main {
         }
     }
 
+    public static void printRemoveMenu() {
+        System.out.println();
+        System.out.println("-- REMOVE MENU --");
+        System.out.println("0. Return");
+        System.out.println("1. Delete a single bottle");
+        System.out.println("2. Delete bottles not in volume range");
+    }
+
     public static void removeSingleBottle(ArrayList<Bottle> bottles) {
-        if (bottles.isEmpty()) {
-            System.out.println("There are no bottles to remove.");
-            Utils.waitForUser();
-            return;
-        }
+        //Optional bottle allows for cancelling of the deletion process
+        //if the user changes their mind or started in error.
         Optional<Bottle> optionalBottle = chooseBottleFrom(bottles);
         if (optionalBottle.isEmpty()) {
             return;
@@ -324,6 +333,7 @@ public class Main {
 
     public static void deleteByVolume(ArrayList<Bottle> bottles) {
         //Deletes bottles NOT in range
+        //The same value can be entered for both bounds to preserve only a single volume size
         int lowerBound = Utils.scanBoundedInt(0, 10000, "Lower bound: ");
         int upperBound = Utils.scanBoundedInt(lowerBound, 10000, "Upper bound: ");
         Iterator<Bottle> bottleIterator = bottles.iterator();
@@ -337,6 +347,14 @@ public class Main {
     }
 
     public static void changeContentsOfABottle(ArrayList<Bottle> bottles) {
+        if (bottles.isEmpty()) {
+            System.out.println();
+            System.out.print("There are no bottles to modify.");
+            Utils.waitForUser();
+            return;
+        }
+        //Optional bottle allows for cancelling of the edit process
+        //if the user changes their mind or started in error.
         Optional<Bottle> optionalBottle = chooseBottleFrom(bottles);
         if (optionalBottle.isEmpty()) {
             return;
