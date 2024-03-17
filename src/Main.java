@@ -118,8 +118,8 @@ public class Main {
                     sortFlasksByWarmTime(flasks);
                     break;
 
-                    // TODO    Should I add a default clause?
-                    // TODO    What should it do? Print message / throw exception?
+                // TODO    Should I add a default clause?
+                // TODO    What should it do? Print message / throw exception?
             }
         }
     }
@@ -220,6 +220,10 @@ public class Main {
         ArrayList<Bottle> filteredBottles = getFilteredList(bottles);
         while (true) {
             printFilteredBottles(filteredBottles);
+            if (filteredBottles.size() == 1) {
+                Utils.waitForUser();
+                return;
+            }
             // TODO Should I extract this? :
             System.out.println("0. Return");
             System.out.println("1. Calculate total volume for this brand");

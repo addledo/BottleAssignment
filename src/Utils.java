@@ -7,7 +7,8 @@ public final class Utils {
     }
 
     // Found conflicting information about whether or not to close a System.in Scanner
-    // Closing it caused a NoSuchElement exception so the decision was clear
+    // Closing it caused a NoSuchElement exception, presumably because System.in was closed,
+    // so I've left them open
 
     public static int scanInt(String prompt) {
         int num;
