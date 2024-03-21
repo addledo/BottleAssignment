@@ -29,6 +29,8 @@ public class Main {
                     //Exit
                     saveBottles(bottles, SAVE_LOCATION);
                     return;
+                default:
+                    System.err.println("Error: code has reached an unreachable statement.");
             }
         }
 
@@ -81,6 +83,8 @@ public class Main {
                 case 6:
                     displayAverageVolume(bottles, false);
                     break;
+                default:
+                    System.err.println("Error: code has reached an unreachable statement.");
             }
         }
     }
@@ -117,9 +121,9 @@ public class Main {
                 case 2:
                     sortFlasksByWarmTime(flasks);
                     break;
+                default:
+                    System.err.println("Error: code has reached an unreachable statement.");
 
-                // TODO    Should I add a default clause?
-                // TODO    What should it do? Print message / throw exception?
             }
         }
     }
@@ -238,6 +242,8 @@ public class Main {
                 case 2:
                     displayAverageVolume(filteredBottles, true);
                     break;
+                default:
+                    System.err.println("Error: code has reached an unreachable statement.");
             }
         }
     }
