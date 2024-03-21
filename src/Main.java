@@ -14,10 +14,12 @@ public class Main {
                     viewCollection(bottles);
                     break;
                 case 2:
-                    bottles.add(newBottle());
+                    //Add bottle
+                    bottles.add(newBottle(false));
                     break;
                 case 3:
-                    bottles.add(newFlask());
+                    //Add flask
+                    bottles.add(newBottle(true));
                     break;
                 case 4:
                     changeContentsOfABottle(bottles);
@@ -47,7 +49,7 @@ public class Main {
         System.out.println("6. Exit");
     }
 
-    public static void viewCollection(ArrayList<Bottle> bottles) {    //TODO Is this method size ok?
+    public static void viewCollection(ArrayList<Bottle> bottles) {
         while (true) {
             printBottles(bottles);
             if (bottles.isEmpty()) {
@@ -159,32 +161,23 @@ public class Main {
         flasks.sort((Flask o1, Flask o2) -> o1.getKeepWarmHours() - o2.getKeepWarmHours());
     }
 
-    public static Bottle newBottle() {
+    public static Bottle newBottle(boolean isFlask) {
         System.out.println();
         System.out.println("Please enter the details of the bottle you'd like to add.");
-        // TODO   Should I extract this method if it's used twice:
         String brand = Utils.scanBoundedString("Brand: ", 20, false);
         int volumeInML = askVolume();
         System.out.println();
         Material material = askMaterial();
+        if (isFlask) {
+            int keepWarmHours = askKeepWarmHours();
+            return new Flask(brand, volumeInML, material, keepWarmHours);
+        }
         return new Bottle(brand, volumeInML, material);
     }
 
-    public static Flask newFlask() {
-        System.out.println();
-        System.out.println("Please enter the details of the flask you'd like to add.");
-        String brand = Utils.scanBoundedString("Brand: ", 20, false);
-        int volumeInML = askVolume();
-        Material material = askMaterial();
-        int keepWarmHours = askKeepWarmHours();
-        return new Flask(brand, volumeInML, material, keepWarmHours);
-    }
 
     public static int askVolume() {
-        // TODO    Layout like this or single return statement?
-        int volumeInML;
-        volumeInML = Utils.scanBoundedInt(1, 10000, "Volume (ml): ");
-        return volumeInML;
+        return Utils.scanBoundedInt(1, 10000, "Volume (ml): ");
     }
 
     public static Material askMaterial() {
