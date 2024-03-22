@@ -164,7 +164,7 @@ public class Main {
     public static Bottle newBottle(boolean isFlask) {
         String bottleType = isFlask ? "flask" : "bottle";
         System.out.printf("%nPlease enter the details of the %s you'd like to add. %n", bottleType);
-        String brand = Utils.scanBoundedString("Brand: ", Bottle.brandLengthLimit, false);
+        String brand = Utils.scanBoundedString("Brand: ", 20, false);
         int volumeInML = askVolume();
         System.out.println();
         Material material = askMaterial();
