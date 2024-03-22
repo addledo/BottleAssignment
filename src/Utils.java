@@ -28,11 +28,8 @@ public final class Utils {
 
     public static int scanBoundedInt(int min, int max, String prompt) {
         //Scans int in range min-max inclusive
-        //TODO      Should I throw an exception here?
-//        if (max < min) {
-//            throw new InputMismatchException();
-//            // IllegalArgumentException?
-//        }
+        assert (min <= max);
+        // min > max would cause an infinite loop
         int num;
         while (true) {
             num = scanInt(prompt);

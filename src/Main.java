@@ -315,6 +315,8 @@ public class Main {
                 break;
             case 2:
                 deleteByVolume(bottles);
+            default:
+                System.err.println("Error: Code has reached an unreachable statement.");
         }
     }
 
