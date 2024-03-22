@@ -435,12 +435,10 @@ public class Main {
     }
 
     public static void saveBottles(ArrayList<Bottle> bottles, String location) {
-        try {
-            FileOutputStream fileOutputStream = new FileOutputStream(location);
-            ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream);
+        // "Try with resources" automatically closes streams
+        try (FileOutputStream fileOutputStream = new FileOutputStream(location);
+             ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream)) {
             objectOutputStream.writeObject(bottles);
-            objectOutputStream.close();
-            fileOutputStream.close();
         } catch (FileNotFoundException e) {
             System.out.println("Unable to write to file: " + e.getMessage());
         } catch (IOException e) {
@@ -451,12 +449,9 @@ public class Main {
     @SuppressWarnings("unchecked")
     public static ArrayList<Bottle> loadBottles(String location) {
         ArrayList<Bottle> bottles = new ArrayList<>();
-        try {
-            FileInputStream fileInputStream = new FileInputStream(location);
-            ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
+        try (FileInputStream fileInputStream = new FileInputStream(location);
+             ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream)) {
             bottles = (ArrayList<Bottle>) objectInputStream.readObject();
-            objectInputStream.close();
-            fileInputStream.close();
         } catch (FileNotFoundException e) {
             System.out.println("Could not find file: " + e.getMessage());
         } catch (IOException e) {
