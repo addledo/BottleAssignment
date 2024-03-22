@@ -2,7 +2,7 @@ import java.io.*;
 import java.util.*;
 
 public class Main {
-    private static final String SAVE_LOCATION = "bottles.dat";   //TODO Where to put this?
+    private static final String SAVE_LOCATION = "bottles.dat";
 
     public static void main(String[] args) {
         ArrayList<Bottle> bottles = loadBottles(SAVE_LOCATION);
@@ -162,9 +162,9 @@ public class Main {
     }
 
     public static Bottle newBottle(boolean isFlask) {
-        System.out.println();
-        System.out.println("Please enter the details of the bottle you'd like to add.");
-        String brand = Utils.scanBoundedString("Brand: ", 20, false);
+        String bottleType = isFlask ? "flask" : "bottle";
+        System.out.printf("%nPlease enter the details of the %s you'd like to add. %n", bottleType);
+        String brand = Utils.scanBoundedString("Brand: ", Bottle.brandLengthLimit, false);
         int volumeInML = askVolume();
         System.out.println();
         Material material = askMaterial();
@@ -190,18 +190,17 @@ public class Main {
         return Material.values()[selection];
     }
 
+    public static void printMaterials() {
+        for (int i = 0; i < Material.values().length; i++) {
+            String material = Material.values()[i].displayName;
+            System.out.printf("[%d] %s%n", i + 1, material);
+        }
+    }
+
     public static int askKeepWarmHours() {
         System.out.println();
         System.out.println("Please enter the keep warm time of your flask.");
         return Utils.scanInt("Hours: ");
-    }
-
-    public static String askContents() {
-        System.out.println();
-        System.out.println("What does it contain?");
-        System.out.println("If empty, just press enter.");
-        System.out.println();
-        return Utils.scanBoundedString("Contains: ", 40, true);
     }
 
     public static void printBottles(ArrayList<Bottle> bottles) {
@@ -215,16 +214,18 @@ public class Main {
 
     public static void filterBottles(ArrayList<Bottle> bottles) {
         ArrayList<Bottle> filteredBottles = getFilteredList(bottles);
+        if (filteredBottles.isEmpty()) {
+            System.err.println("Error: ");
+        }
         while (true) {
             printFilteredBottles(filteredBottles);
             if (filteredBottles.size() == 1) {
                 Utils.waitForUser();
                 return;
             }
-            // TODO Should I extract this? :
-            System.out.println("0. Return");
-            System.out.println("1. Calculate total volume for this brand");
-            System.out.println("2. Calculate average volume for this brand");
+            //The following options are only available if there is more than one
+            // bottle belonging to the chosen brand
+            printFilterMenuOptions();
             int menuChoice = Utils.scanBoundedInt(0, 2, "#: ");
             switch (menuChoice) {
                 case 0:
@@ -239,6 +240,12 @@ public class Main {
                     System.err.println("Error: code has reached an unreachable statement.");
             }
         }
+    }
+
+    private static void printFilterMenuOptions() {
+        System.out.println("0. Return");
+        System.out.println("1. Calculate total volume for this brand");
+        System.out.println("2. Calculate average volume for this brand");
     }
 
     public static void printFilteredBottles(ArrayList<Bottle> filteredBottles) {
@@ -285,14 +292,10 @@ public class Main {
                 matchingBottles.add(bottle);
             }
         }
-        return matchingBottles;
-    }
-
-    public static void printMaterials() {
-        for (int i = 0; i < Material.values().length; i++) {
-            String material = Material.values()[i].displayName;
-            System.out.printf("[%d] %s%n", i + 1, material);
+        if (matchingBottles.isEmpty()) {
+            System.err.println("Error: No bottles were selected. Code should not allow user to choose non-existing brand.");
         }
+        return matchingBottles;
     }
 
     public static void removeBottles(ArrayList<Bottle> bottles) {
@@ -340,13 +343,17 @@ public class Main {
         int lowerBound = Utils.scanBoundedInt(0, 10000, "Lower bound: ");
         int upperBound = Utils.scanBoundedInt(lowerBound, 10000, "Upper bound: ");
         Iterator<Bottle> bottleIterator = bottles.iterator();
+        int removalCount = 0;
         while (bottleIterator.hasNext()) {
             Bottle bottle = bottleIterator.next();
             int volume = bottle.getVolumeInML();
-            if (upperBound < volume || volume < lowerBound) {
+            boolean bottleIsOutsideRange = upperBound < volume || volume < lowerBound;
+            if (bottleIsOutsideRange) {
                 bottleIterator.remove();
+                removalCount++;
             }
         }
+        System.out.printf("%n%d bottles were removed from outside the %dml-%dml range. %n", removalCount, lowerBound, upperBound);
     }
 
     public static void changeContentsOfABottle(ArrayList<Bottle> bottles) {
@@ -367,6 +374,15 @@ public class Main {
         bottle.setContents(newContents);
     }
 
+    public static String askContents() {
+        System.out.println();
+        System.out.println("What does it contain?");
+        System.out.println("If empty, just press enter.");
+        System.out.println();
+        //The Bottle.toString method truncates any values over 17 characters
+        return Utils.scanBoundedString("Contains: ", 40, true);
+    }
+
     public static void sortByBrand(ArrayList<Bottle> bottles) {
         BottleBrandComparator brandComparator = new BottleBrandComparator();
         bottles.sort(brandComparator);
@@ -380,6 +396,13 @@ public class Main {
         return totalVolume;
     }
 
+    public static int calculateAverageVolume(ArrayList<Bottle> bottles) {
+        int totalVolume = calculateTotalVolume(bottles);
+        int n = bottles.size();
+        float averageVolume = (float) totalVolume / n;
+        return Math.round(averageVolume);
+    }
+
     public static void displayTotalVolume(ArrayList<Bottle> bottles, boolean isBrand) {
         int totalVolume = calculateTotalVolume(bottles);
         System.out.println();
@@ -387,13 +410,6 @@ public class Main {
         String brand = isBrand ? " for " + bottles.getFirst().getBrand() : "";
         System.out.printf("Total volume%s: %d%s", brand, totalVolume, volumeUnit);
         Utils.waitForUser();
-    }
-
-    public static int calculateAverageVolume(ArrayList<Bottle> bottles) {
-        int totalVolume = calculateTotalVolume(bottles);
-        int n = bottles.size();
-        float averageVolume = (float) totalVolume / n;
-        return Math.round(averageVolume);
     }
 
     public static void displayAverageVolume(ArrayList<Bottle> bottles, boolean isBrand) {

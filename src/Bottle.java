@@ -1,7 +1,7 @@
 import java.io.Serializable;
 
 public class Bottle implements Serializable, Comparable<Bottle> {
-
+    public static final int brandLengthLimit = 20;
 
     private final String brand;
     private final int volumeInML;
@@ -49,9 +49,11 @@ public class Bottle implements Serializable, Comparable<Bottle> {
     public String toString() {
         String type = this.getClass().getName();
         //Padding strings to align columns:
+        // %n  means strings smaller than n character will be padded to that length (right aligned)
+        // %-n  does the same thing but the text is left aligned
         type = String.format("%-7s", type);
-        String brand = String.format("%-20s", this.brand);
-        String volume = String.format("%-8s", volumeInML +"ml");
+        String brand = String.format("%-" + brandLengthLimit + "s", this.brand);
+        String volume = String.format("%-8s", volumeInML + "ml");
         String materialName = String.format("%-8s", material.displayName);
         String contents = this.contents;
         if (contents.length() > 17) {
